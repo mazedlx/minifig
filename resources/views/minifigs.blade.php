@@ -17,7 +17,7 @@
 			<tr>
 				<td>{{ $minifig->id }}</td>
 				<td>{{ $minifig->name }}</td>
-				<td>{{ $minifig->set->name }}</td>
+				<td>{{ $minifig->set->name }} ({{ $minifig->set->number }})</td>
 				@if($minifig->images->first()) 
 					<td><a href="{{ URL::to('minifigs/' . $minifig->id) }}">{!! HTML::image('uploads/' . $minifig->images->first()->filename, '', array('class' => 'img img-thumbnail', 'width' => '150px')) !!}</a></td>
 				@else
