@@ -31,7 +31,7 @@ class MinifigController extends Controller
 		foreach($sets as $set) {
 			$sets_id[$set->id] = $set->name . ' (' . $set->number .')';
 		}
-		return view('minifig_create')->with('sets_id', $sets_id); //Set::lists('name', 'id'));
+		return view('minifig_create')->with('sets_id', $sets_id);
 	}
 
 	public function store(Request $request) 
@@ -52,7 +52,7 @@ class MinifigController extends Controller
 		if(count($files) > 0) {
 	   	    $uploaddir = 'uploads';
 	 		foreach($files as $file) {
-	 			$filename = sha1(rand(1,100000).time());
+	 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
 	        	$file->move($uploaddir, $filename);
 	        	Image::create(
 	        		array(
@@ -82,7 +82,7 @@ class MinifigController extends Controller
 		if(count($files) > 0) {
 	   	    $uploaddir = 'uploads';
 	 		foreach($files as $file) {
-	 			$filename = sha1(rand(1,100000).time());
+	 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
 	        	$file->move($uploaddir, $filename);
 	        	Image::create(
 	        		array(
