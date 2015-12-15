@@ -30,8 +30,8 @@ class SetController extends Controller
     	]);
 		$file = $request->file('file');
     	if($file[0]) {
-    		$uploaddir = 'uploads';
-    		$filename = sha1(rand(1,100000).time());
+            $uploaddir = 'uploads';
+    		$filename = sha1(rand(1,100000).time()) . '.' . $file[0]->guessExtension();
     		$file[0]->move($uploaddir, $filename);
     	} else {
     		$filename = '';
@@ -64,7 +64,7 @@ class SetController extends Controller
     	$file = $request->file('file');
     	if($file[0]) {
     		$uploaddir = 'uploads';
-    		$filename = sha1(rand(1,100000).time());
+    		$filename = sha1(rand(1,100000).time()) . '.' . $file[0]->guessExtension();
     		$file[0]->move($uploaddir, $filename);
     	} else {
     		$filename = '';
