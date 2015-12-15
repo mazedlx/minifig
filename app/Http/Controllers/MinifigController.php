@@ -23,7 +23,11 @@ class MinifigController extends Controller
 
 	public function create()
 	{
-		return view('minifig_create')->with('sets_id', Set::lists('name', 'id'));
+		$sets = Set::all();
+		foreach($sets as $set) {
+			$sets_id[$set->id] = $set->name . ' (' . $set->number .')';
+		}
+		return view('minifig_create')->with('sets_id', $sets_id); //Set::lists('name', 'id'));
 	}
 
 	public function store(Request $request) 
