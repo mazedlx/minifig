@@ -5,12 +5,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>@yield('title')</title>
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-		<style>
-		body {
-			padding-top: 60px;
-		}
-		</style>
+		{!! HTML::style('./css/bootstrap.css') !!}
+		{!! HTML::script('js/jquery-2.1.4.js') !!}
+		{!! HTML::script('js/bootstrap.js') !!}
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -30,6 +27,7 @@
 					<li class="{{ set_active('/') }}"><a href="{{ URL::to('/') }}">Home</a></li>
 					<li class="{{ set_active('minifigs') }}"><a href="{{ URL::to('minifigs') }}">Minifigs</a></li>
 					<li class="{{ set_active('sets') }}"><a href="{{ URL::to('sets') }}">Sets</a></li>
+					<li class=""><a href="{{ URL::to('auth/logout') }}">Logout</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -41,8 +39,6 @@
 			@yield('content')
 			</div>
 		</div>
-		<script src="//code.jquery.com/jquery.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script>
 		$(function () {
   			$('[data-toggle="tooltip"]').tooltip()
