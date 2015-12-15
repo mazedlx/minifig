@@ -14,6 +14,10 @@ use App\Image;
 
 class MinifigController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update']]);
+    }
 	public function index()
 	{
 		$minifigs = Minifig::all();

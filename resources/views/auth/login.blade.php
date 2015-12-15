@@ -1,21 +1,24 @@
-<form method="POST" action="/auth/login">
-    {!! csrf_field() !!}
-
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
+@extends('layouts.master')
+@section('title', 'Login')
+@section('content')
+<div class="row">
+    <div class="col-md-6">
+    {!! Form::open(array('url' => '/auth/login', 'class' => 'form form-horizontal')) !!}
+    <div class="form-group">
+        {!! Form::label('email', 'Username', array('class' => 'col-md-2 control-label')) !!}
+        <div class="col-md-6">
+            {!! Form::text('email', '', array('id' => 'email', 'class' => 'form-control', 'placeholder' => 'Username')) !!}
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::label('password', 'Password', array('class' => 'col-md-2 control-label')) !!}
+        <div class="col-md-6">
+            {!! Form::password('password', array('id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password')) !!}
+        </div>
     </div>
 
-    <div>
-        Password
-        <input type="password" name="password" id="password">
+    <button type="submit" class="btn btn-default">Login</button>
+    {!! Form::close() !!}
     </div>
-
-    <div>
-        <input type="checkbox" name="remember"> Remember Me
-    </div>
-
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
+</div>
+@endsection

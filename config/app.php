@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://alderaan.mazedlx.net/minifig',
+    'url' => 'http://lego.localhost',
 
     /*
     |--------------------------------------------------------------------------
