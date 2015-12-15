@@ -20,9 +20,6 @@
     <button type="submit" class="btn btn-default">Login</button>
     {!! Form::close() !!}
     </div>
-<<<<<<< HEAD
-</form>
-=======
 </div>
 @endsection
->>>>>>> refs/remotes/origin/master
+
