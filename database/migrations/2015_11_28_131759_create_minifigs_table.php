@@ -18,7 +18,6 @@ class CreateMinifigsTable extends Migration
             $table->foreign('set_id')->references('id')->on('sets')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

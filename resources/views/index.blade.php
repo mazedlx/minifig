@@ -2,5 +2,5 @@
 @section('title', 'Lego Minifigs')
 
 @section('content')
-<h2>{{ $minifigs }} Minifigs in {{ $sets }} Sets</h2>
+<h3>{{ $minifigs }} Minifigs (with {{ $images }} images) in {{ $sets }} Sets</h3>
 @endsection

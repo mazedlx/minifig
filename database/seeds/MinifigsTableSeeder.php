@@ -12,7 +12,10 @@ class MinifigsTableSeeder extends Seeder
     public function run()
     {
         App\Minifig::create([
-        
+            'set_id'    => 9999,
+            'name'  => 'placeeholder'
+        ]);
+        App\Minifig::create([       
             'set_id' => 3,
             'name' => 'Boba Fett'
         ]);
@@ -752,5 +755,6 @@ class MinifigsTableSeeder extends Seeder
             'set_id' => 48, 
             'name' => 'Male Adventurer'
         ]);
+        App\Minifig::find(1)->delete();
     }
 }

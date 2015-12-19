@@ -15,7 +15,7 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('minifig_id')->unsigned();
-            $table->foreign('minifig_id')->references('id')->on('minifigs');
+            $table->foreign('minifig_id')->references('id')->on('minifigs')->onDelete('cascade');
             $table->string('filename');
             $table->timestamps();
         });

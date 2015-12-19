@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Session;
 use DB;
 use App\Set;
+
 use App\Http\Controllers\Controller;
 
 class SetController extends Controller
@@ -84,7 +85,7 @@ class SetController extends Controller
 		$set = Set::find($id);
         $set->delete();
 
-		Session::flash('msg', 'Successfully deleted');
+		Session::flash('msg', 'Set deleted');
   		return redirect()->action('SetController@index');
 	}
 

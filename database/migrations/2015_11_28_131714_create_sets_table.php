@@ -13,12 +13,11 @@ class CreateSetsTable extends Migration
     public function up()
     {
         Schema::create('sets', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('number');
             $table->string('filename');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
