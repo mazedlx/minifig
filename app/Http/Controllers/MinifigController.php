@@ -37,15 +37,15 @@ class MinifigController extends Controller
     	]);
     	$minifig = Minifig::create(
     		array(
-    			'name' => $request->name, 
+    			'name' => $request->name,
     			'set_id' => $request->set_id
     		)
     	);
     	$id = $minifig->id;
 
-		if($request->hasFile('files')) {
+		if ($request->hasFile('files')) {
             if ($request->file('files')->isValid()) {
-                foreach($request->files as $file) {
+                foreach ($request->files as $file) {
 		 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
 		        	$file->move($uploaddir, $filename);
 		        	Image::create(
@@ -73,18 +73,18 @@ class MinifigController extends Controller
     	$minifig->set_id = $request->set_id;
     	$minifig->save();
 
-    	if($request->images_to_delete) {
-			foreach($request->images_to_delete as $id_image) {
+    	if ($request->images_to_delete) {
+			foreach ($request->images_to_delete as $id_image) {
 				$image = Image::find($id_image);
 				$image->delete();
 			}
 		}
 
 		$files = $request->file('files');
-		if(count($files) > 0) {
+		if (count($files) > 0) {
 	   	    $uploaddir = 'uploads';
-	 		foreach($files as $file) {
-	 			if($file) {
+	 		foreach ($files as $file) {
+	 			if ($file) {
 		 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
 		        	$file->move($uploaddir, $filename);
 		        	Image::create(

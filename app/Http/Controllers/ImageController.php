@@ -73,7 +73,7 @@ class ImageController extends Controller
     public function update(Request $request, $id)
     {
         //
-    }
+    }   
 
     /**
      * Remove the specified resource from storage.
@@ -89,7 +89,6 @@ class ImageController extends Controller
         $image->delete();
 
         Session::flash('msg', 'Successfully deleted');
-        return redirect()->action('MinifigController@show', ['id' => $minifig->id]);
-        
-    }
+        return redirect()->action('MinifigController@show', ['id' => $minifig->id]);        
+        }
 }

@@ -27,7 +27,7 @@ class SetController extends Controller
     	]);
 		
         $uploadpath = 'uploads';
-        if($request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             if ($request->file('file')->isValid()) {
                 $filename = sha1(rand(1,100000).time()) . '.' . $request->file('file')->guessExtension();
                 $request->file('file')->move($uploadpath, $filename);
@@ -64,7 +64,7 @@ class SetController extends Controller
         $set = Set::find($id);
 
         $uploadpath = 'uploads';
-        if($request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             if ($request->file('file')->isValid()) {
                 $filename = sha1(rand(1,100000).time()) . '.' . $request->file('file')->guessExtension();
                 $request->file('file')->move($uploadpath, $filename);
@@ -101,5 +101,5 @@ class SetController extends Controller
 	{
 		$set = Set::find($id);
 		return view('set_edit')->with('set', $set);
-	}
+	}   
 }

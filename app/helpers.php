@@ -1,5 +1,5 @@
 <?php
-if(!function_exists('set_active')) {
+if (!function_exists('set_active')) {
 	/**
 	 * Set active page
 	 * @access public
