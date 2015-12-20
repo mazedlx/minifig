@@ -26,7 +26,7 @@ class MinifigController extends Controller
 	public function create()
 	{
 		return view('minifig_create')
-			->with('sets_id', Set::orderBy('name', 'asc')->lists('name', 'id'));
+			->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'));
 	}
 
 	public function store(Request $request) 
@@ -127,7 +127,7 @@ class MinifigController extends Controller
 		$minifig = Minifig::findOrFail($id);
 		$images = $minifig->images;
 		return view('minifig_edit')
-			->with('sets_id', Set::orderBy('name', 'asc')->lists('name', 'id'))
+			->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'))
 			->with('images', $images)
 			->with('minifig', $minifig);
 	}
