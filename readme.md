@@ -4,7 +4,7 @@ The name says it all: a web app to organize your minifigs. Based on Laravel. Sim
 ### Documentation
 Documentation for the Laravel framework can be found on the [Laravel website](http://laravel.com/docs).
 There is no special documentation for the Minifigs application itself. Create a database with utf8-unicode-ci encoding, create an .env file, and add your database settings to it.Run the migrations with
-```php
+```sh
 php artisan migrate:refresh --seed
 ```
 This will create some sample data.
