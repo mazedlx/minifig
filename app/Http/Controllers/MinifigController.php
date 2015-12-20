@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Session;
-use DB;
-
 use App\Http\Controllers\Controller;
 use App\Minifig;
 use App\Set;
@@ -21,17 +18,15 @@ class MinifigController extends Controller
 	public function index()
 	{
 		$minifigs = Minifig::all();
-
-		return view('minifigs')->with('minifigs', $minifigs);
+		
+		return view('minifigs')
+			->with('minifigs', $minifigs);
 	}   
 
 	public function create()
 	{
-		$sets = Set::all();
-		foreach($sets as $set) {
-			$sets_id[$set->id] = $set->name . ' (' . $set->number .')';
-		}
-		return view('minifig_create')->with('sets_id', $sets_id);
+		return view('minifig_create')
+			->with('sets_id', Set::orderBy('name', 'asc')->lists('name', 'id'));
 	}
 
 	public function store(Request $request) 
@@ -42,28 +37,28 @@ class MinifigController extends Controller
     	]);
     	$minifig = Minifig::create(
     		array(
-    			'name' => $request->name, 
+    			'name' => $request->name,
     			'set_id' => $request->set_id
     		)
     	);
     	$id = $minifig->id;
 
-		$files = $request->file('files');
-		if(count($files) > 0) {
-	   	    $uploaddir = 'uploads';
-	 		foreach($files as $file) {
-	 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
-	        	$file->move($uploaddir, $filename);
-	        	Image::create(
-	        		array(
-	        			'minifig_id' => $id,
-	        			'filename' => $filename
-	        		)
-	        	);
+		if ($request->hasFile('files')) {
+            if ($request->file('files')->isValid()) {
+                foreach ($request->files as $file) {
+		 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
+		        	$file->move($uploaddir, $filename);
+		        	Image::create(
+		        		array(
+		        			'minifig_id' => $id,
+		        			'filename' => $filename
+		        		)
+		        	);
+		        }
 	      	}
 	    }
 	    
-  		Session::flash('msg', 'Minifig created'); 
+  		$request->session()->flash('msg', 'Minifig created'); 
   		return redirect()->action('MinifigController@index');
 	}
 
@@ -78,31 +73,40 @@ class MinifigController extends Controller
     	$minifig->set_id = $request->set_id;
     	$minifig->save();
 
+    	if ($request->images_to_delete) {
+			foreach ($request->images_to_delete as $id_image) {
+				$image = Image::find($id_image);
+				$image->delete();
+			}
+		}
+
 		$files = $request->file('files');
-		if(count($files) > 0) {
+		if (count($files) > 0) {
 	   	    $uploaddir = 'uploads';
-	 		foreach($files as $file) {
-	 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
-	        	$file->move($uploaddir, $filename);
-	        	Image::create(
-	        		array(
-	        			'minifig_id' => $id,
-	        			'filename' => $filename
-	        		)
-	        	);
+	 		foreach ($files as $file) {
+	 			if ($file) {
+		 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
+		        	$file->move($uploaddir, $filename);
+		        	Image::create(
+		        		array(
+		        			'minifig_id' => $id,
+		        			'filename' => $filename
+		        		)
+		        	);
+		        }
 	      	}
 	    }
 
-    	Session::flash('msg', 'Minifig saved'); 
+    	$request->session()->flash('msg', 'Minifig saved'); 
   		return redirect()->action('MinifigController@index');
 	}
 
-	public function destroy($id)
+	public function destroy($id, Request $request)
 	{
 		$minifig = Minifig::find($id);
         $minifig->delete();
 
-		Session::flash('msg', 'Successfully deleted');
+		$request->session()->flash('msg', 'Minifig deleted');
   		return redirect()->action('MinifigController@index');
 	}
 
@@ -112,7 +116,6 @@ class MinifigController extends Controller
 		$set = $minifig->set;
 		$images = $minifig->images;
 		
-
 		return view('minifig_show')
 			->with('minifig', $minifig)
 			->with('set', $set)
@@ -122,6 +125,10 @@ class MinifigController extends Controller
 	public function edit($id)
 	{
 		$minifig = Minifig::findOrFail($id);
-		return view('minifig_edit')->with('sets_id', Set::lists('name', 'id'))->with('minifig', $minifig);
+		$images = $minifig->images;
+		return view('minifig_edit')
+			->with('sets_id', Set::orderBy('name', 'asc')->lists('name', 'id'))
+			->with('images', $images)
+			->with('minifig', $minifig);
 	}
 }

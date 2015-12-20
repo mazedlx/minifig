@@ -17,24 +17,40 @@
 		</div>
 	</div>
 	<div class="form-group">
-		{!! Form::label('files', 'Files', array('class' => 'col-md-2 control-label')); !!}
+		{!! Form::label('files', 'Images', array('class' => 'col-md-2 control-label')); !!}
 		<div class="col-md-6">
 			{!! Form::file('files[]', array('class' => 'form-control', 'multiple' => 'multiple')); !!}
 		</div>
 	</div>	
+	@foreach($images as $image)
+		<div class="form-group">
+			<div class="col-md-6 col-md-offset-2">
+				<div class="has-error">
+					<div class="checkbox">
+		    			{!! HTML::image('uploads/' . $image->filename, '', array('class' => 'img img-thumbnail', 'width' => '150px')) !!}
+		    			<label>
+		      				{!! Form::checkbox('images_to_delete[]', $image->id) !!} &times;
+		      			</label>
+		  			</div>
+				</div>
+			</div>
+		</div>
+	@endforeach
 	<div class="form-group">
 		<div class="col-md-6 col-md-offset-2">
-			<button type="submit" class="btn btn-primary">Save</button>
+
+			{!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
 		</div>
 	</div>
 {!!Form::close()!!}
 </div>
 <div class="row">
-{!! Form::open(array('url' => 'minifigs/' . $minifig->id, 'method' => 'DELETE', 'class' => 'form form-horizontal')) !!}
+{!! Form::open(['action' => ['MinifigController@destroy', $minifig->id], 'method' => 'DELETE', 'class' => 'form form-horizontal']) !!}
 	<div class="form-group">
 		<div class="col-md-6 col-md-offset-2">
-    	{!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
-    </div>
+		{!! Form::submit('Delete', ['class'=>'btn btn-danger']) !!}
+		</div>
+	</div>
 {!! Form::close() !!}
 </div>
 @endsection

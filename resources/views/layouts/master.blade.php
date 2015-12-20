@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>@yield('title')</title>
-		{!! HTML::style('./css/bootstrap.css') !!}
+		{!! HTML::style('css/bootstrap.css') !!}
 		{!! HTML::script('js/jquery-2.1.4.js') !!}
 		{!! HTML::script('js/bootstrap.js') !!}
 	</head>

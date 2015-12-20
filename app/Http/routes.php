@@ -16,12 +16,14 @@
  */
 Route::get('/', function () {
 	return view('index')
-		->with('minifigs', App\Minifig::all()->count())
-		->with('sets', App\Set::all()->count());
+		->with('minifigs', App\Minifig::count())
+		->with('sets', App\Set::count())
+		->with('images', App\Image::count());
 });
 
 Route::resource('minifigs', 'MinifigController');
 Route::resource('sets', 'SetController');
+Route::resource('images', 'ImageController', ['only' => ['destroy']]);
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
