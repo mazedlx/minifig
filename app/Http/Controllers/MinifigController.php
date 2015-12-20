@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Session;
-use DB;
-
 use App\Http\Controllers\Controller;
 use App\Minifig;
 use App\Set;
@@ -46,11 +43,9 @@ class MinifigController extends Controller
     	);
     	$id = $minifig->id;
 
-		$files = $request->file('files');
-		if(count($files) > 0) {
-	   	    $uploaddir = 'uploads';
-	 		foreach($files as $file) {
-	 			if($file) {
+		if($request->hasFile('files')) {
+            if ($request->file('files')->isValid()) {
+                foreach($request->files as $file) {
 		 			$filename = sha1(rand(1,100000).time()) . '.' . $file->guessExtension();
 		        	$file->move($uploaddir, $filename);
 		        	Image::create(
@@ -63,7 +58,7 @@ class MinifigController extends Controller
 	      	}
 	    }
 	    
-  		Session::flash('msg', 'Minifig created'); 
+  		$request->session()->flash('msg', 'Minifig created'); 
   		return redirect()->action('MinifigController@index');
 	}
 
@@ -78,10 +73,11 @@ class MinifigController extends Controller
     	$minifig->set_id = $request->set_id;
     	$minifig->save();
 
-		foreach($request->images_to_delete as $id_image) {
-			$image = Image::find($id_image);
-			$image->delete();
-
+    	if($request->images_to_delete) {
+			foreach($request->images_to_delete as $id_image) {
+				$image = Image::find($id_image);
+				$image->delete();
+			}
 		}
 
 		$files = $request->file('files');
@@ -101,16 +97,16 @@ class MinifigController extends Controller
 	      	}
 	    }
 
-    	Session::flash('msg', 'Minifig saved'); 
+    	$request->session()->flash('msg', 'Minifig saved'); 
   		return redirect()->action('MinifigController@index');
 	}
 
-	public function destroy($id)
+	public function destroy($id, Request $request)
 	{
 		$minifig = Minifig::find($id);
         $minifig->delete();
 
-		Session::flash('msg', 'Minifig deleted');
+		$request->session()->flash('msg', 'Minifig deleted');
   		return redirect()->action('MinifigController@index');
 	}
 

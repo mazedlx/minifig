@@ -19,7 +19,7 @@
 	<div class="form-group">
 		{!! Form::label('file', 'Files', array('class' => 'col-md-2 control-label')); !!}
 		<div class="col-md-6">
-			{!! Form::file('file[]', array('class' => 'form-control', 'multiple' => 'multiple')); !!}
+			{!! Form::file('file', array('class' => 'form-control', 'multiple' => 'multiple')); !!}
 		</div>
 	</div>	
 	<div class="form-group">

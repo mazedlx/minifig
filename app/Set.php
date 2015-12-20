@@ -10,6 +10,6 @@ class Set extends Model
     
     public function minifigs()
     {
-    	return $this->hasMany('App\Minifig');
+    	return $this->hasMany('App\Minifig')->orderBy('name', 'asc');
     }
 }

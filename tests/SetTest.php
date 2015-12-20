@@ -26,6 +26,7 @@ class SetTest extends TestCase
     		->visit('sets/create')
     		->type('TestSet', 'name')
     		->type('12345', 'number')
+            ->attach('10188.png', 'file')
     		->press('Create')
     		->see('Set created');
     }
@@ -50,4 +51,9 @@ class SetTest extends TestCase
             ->see('Set deleted');
     }
 
+    public function testSetEditAsGuest()
+    {
+        $this->visit('sets/9999/edit')
+            ->see('login');
+    }
 }

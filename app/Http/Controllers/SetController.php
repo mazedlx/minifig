@@ -3,13 +3,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-use Session;
-use DB;
-use App\Set;
-
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Set;
 
 class SetController extends Controller
 {
@@ -29,14 +25,17 @@ class SetController extends Controller
        		'name' 		=> 'required|max:255',
        		'number'	=> 'required|max:255',
     	]);
-		$file = $request->file('file');
-    	if($file[0]) {
-            $uploaddir = 'uploads';
-    		$filename = sha1(rand(1,100000).time()) . '.' . $file[0]->guessExtension();
-    		$file[0]->move($uploaddir, $filename);
-    	} else {
-    		$filename = '';
-    	}
+		
+        $uploadpath = 'uploads';
+        if($request->hasFile('file')) {
+            if ($request->file('file')->isValid()) {
+                $filename = sha1(rand(1,100000).time()) . '.' . $request->file('file')->guessExtension();
+                $request->file('file')->move($uploadpath, $filename);
+                $set->filename = $filename;
+            }
+        } else {
+            $filename = '';
+        }
 
     	$set = Set::create(
     		array(
@@ -46,7 +45,7 @@ class SetController extends Controller
     		)
     	);
 
-  		Session::flash('msg', 'Set created'); 
+  		$request->session()->flash('msg', 'Set created'); 
   		return redirect()->action('SetController@index');
 	}
 
@@ -61,31 +60,32 @@ class SetController extends Controller
        		'name' 		=> 'required|max:255',
             'number' => 'required|max:255'
     	]);
+
+        $set = Set::find($id);
+
+        $uploadpath = 'uploads';
+        if($request->hasFile('file')) {
+            if ($request->file('file')->isValid()) {
+                $filename = sha1(rand(1,100000).time()) . '.' . $request->file('file')->guessExtension();
+                $request->file('file')->move($uploadpath, $filename);
+                $set->filename = $filename;
+            }
+        }
     	
-    	$file = $request->file('file');
-    	if($file[0]) {
-    		$uploaddir = 'uploads';
-    		$filename = sha1(rand(1,100000).time()) . '.' . $file[0]->guessExtension();
-    		$file[0]->move($uploaddir, $filename);
-    	} else {
-    		$filename = '';
-    	}
-    	$set = Set::find($id);
     	$set->name = $request->name;
         $set->number = $request->number;
-    	$set->filename = $filename;
     	$set->save();	
 
-    	Session::flash('msg', 'Set saved'); 
+    	$request->session()->flash('msg', 'Set saved'); 
   		return redirect()->action('SetController@index');
 	}
 
-	public function destroy($id)
+	public function destroy($id, Request $request)
 	{
 		$set = Set::find($id);
         $set->delete();
 
-		Session::flash('msg', 'Set deleted');
+		$request->session()->flash('msg', 'Set deleted');
   		return redirect()->action('SetController@index');
 	}
 
