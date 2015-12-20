@@ -17,4 +17,8 @@ If you discover a security vulnerability within this application, please send an
 
 ### License
 
-This piece of software is licensed under the GPLv3 [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.en.html)
+This piece of software is licensed under the GPLv3 [GPLv3 License](http://www.gnu.org/licenses/gpl-3.0.en.html), this means:
+*the freedom to use the software for any purpose,
+*the freedom to change the software to suit your needs,
+*the freedom to share the software with your friends and neighbors, and
+*the freedom to share the changes you make.
