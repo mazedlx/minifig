@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-   /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -24,6 +24,6 @@ class ImageController extends Controller
         $image->delete();
 
         Session::flash('msg', 'Successfully deleted');
-        return redirect()->action('MinifigController@show', ['id' => $minifig->id]);        
+        return redirect()->action('MinifigController@show', ['id' => $minifig->id]);
     }
 }
