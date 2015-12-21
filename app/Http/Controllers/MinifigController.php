@@ -15,6 +15,7 @@ class MinifigController extends Controller
     {
         $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update']]);
     }
+
     public function index()
     {
         $minifigs = Minifig::all();
