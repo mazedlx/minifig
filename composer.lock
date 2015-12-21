@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ba1984a93c06934e556a7e9d005a7df0",
+    "hash": "947d41424e6fbdc191a9ab25302bacdc",
     "content-hash": "28cac70c2b24b7e04dfd471d2e0aa027",
     "packages": [
         {
@@ -354,16 +354,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.0-beta1",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c67883053a9f50228cf04a8268c3d174c36c2f4e"
+                "reference": "7f62d81acb2001faafb21a32544464ebfc92476c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c67883053a9f50228cf04a8268c3d174c36c2f4e",
-                "reference": "c67883053a9f50228cf04a8268c3d174c36c2f4e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/7f62d81acb2001faafb21a32544464ebfc92476c",
+                "reference": "7f62d81acb2001faafb21a32544464ebfc92476c",
                 "shasum": ""
             },
             "require": {
@@ -479,7 +479,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-12-17 20:36:26"
+            "time": "2015-12-21 17:25:36"
         },
         {
             "name": "laravelcollective/html",
