@@ -21,7 +21,7 @@ class MinifigController extends Controller
 
     public function index()
     {
-        $minifigs = Minifig::all();
+        $minifigs = Minifig::orderBy('name', 'asc')->get();
 
         return view('minifigs')
             ->with('minifigs', $minifigs);

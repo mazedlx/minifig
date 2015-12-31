@@ -18,7 +18,7 @@ class SetController extends Controller
     }
     public function index()
     {
-        $sets = Set::all();
+        $sets = Set::orderBy('name', 'asc')->get();
         return view('sets')->with('sets', $sets);
     }
 
