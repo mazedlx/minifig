@@ -1,14 +1,17 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Requests\SetRequest;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Set;
 
 class SetController extends Controller
 {
+    protected $uploadpath = 'uploads';
+
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update']]);
@@ -19,19 +22,12 @@ class SetController extends Controller
         return view('sets')->with('sets', $sets);
     }
 
-    public function store(Request $request)
+    public function store(SetRequest $request)
     {
-        $this->validate($request, [
-               'name'        => 'required|max:255',
-               'number'    => 'required|max:255',
-        ]);
-
-        $uploadpath = 'uploads';
         if ($request->hasFile('file')) {
             if ($request->file('file')->isValid()) {
                 $filename = sha1(rand(1, 100000).time()) . '.' . $request->file('file')->guessExtension();
-                $request->file('file')->move($uploadpath, $filename);
-                $set->filename = $filename;
+                $request->file('file')->move($this->uploadpath, $filename);
             }
         } else {
             $filename = '';
@@ -39,9 +35,9 @@ class SetController extends Controller
 
         $set = Set::create(
             array(
-                'name'        => $request->name,
-                'number'    => $request->number,
-                'filename'    => $filename
+                'name' => $request->name,
+                'number' => $request->number,
+                'filename' => $filename
             )
         );
 
@@ -54,20 +50,14 @@ class SetController extends Controller
         return view('set_create');
     }
 
-    public function update($id, Request $request)
+    public function update($id, SetRequest $request)
     {
-        $this->validate($request, [
-               'name'        => 'required|max:255',
-            'number' => 'required|max:255'
-        ]);
-
         $set = Set::find($id);
 
-        $uploadpath = 'uploads';
         if ($request->hasFile('file')) {
             if ($request->file('file')->isValid()) {
                 $filename = sha1(rand(1, 100000).time()) . '.' . $request->file('file')->guessExtension();
-                $request->file('file')->move($uploadpath, $filename);
+                $request->file('file')->move($this->uploadpath, $filename);
                 $set->filename = $filename;
             }
         }
@@ -77,15 +67,6 @@ class SetController extends Controller
         $set->save();
 
         $request->session()->flash('msg', 'Set saved');
-        return redirect()->action('SetController@index');
-    }
-
-    public function destroy($id, Request $request)
-    {
-        $set = Set::find($id);
-        $set->delete();
-
-        $request->session()->flash('msg', 'Set deleted');
         return redirect()->action('SetController@index');
     }
 
@@ -101,5 +82,14 @@ class SetController extends Controller
     {
         $set = Set::find($id);
         return view('set_edit')->with('set', $set);
+    }
+
+    public function destroy($id, Request $request)
+    {
+        $set = Set::find($id);
+        $set->delete();
+
+        $request->session()->flash('msg', 'Set deleted');
+        return redirect()->action('SetController@index');
     }
 }

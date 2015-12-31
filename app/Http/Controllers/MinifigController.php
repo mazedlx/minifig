@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Http\Requests\MinifigRequest;
 use App\Http\Controllers\Controller;
 use App\Minifig;
 use App\Set;
@@ -11,6 +12,8 @@ use App\Image;
 
 class MinifigController extends Controller
 {
+    protected $uploadpath = 'uploads';
+
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update']]);
@@ -30,12 +33,8 @@ class MinifigController extends Controller
             ->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'));
     }
 
-    public function store(Request $request)
+    public function store(MinifigRequest $request)
     {
-        $this->validate($request, [
-               'name'        => 'required|max:255',
-               'set_id'    => 'required'
-        ]);
         $minifig = Minifig::create(
             array(
                 'name' => $request->name,
@@ -45,10 +44,10 @@ class MinifigController extends Controller
         $id = $minifig->id;
 
         if ($request->hasFile('files')) {
-            if ($request->file('files')->isValid()) {
-                foreach ($request->files as $file) {
+            if ($request->file('files')) {
+                foreach ($request->file('files') as $file) {
                     $filename = sha1(rand(1, 100000).time()) . '.' . $file->guessExtension();
-                    $file->move($uploaddir, $filename);
+                    $file->move($this->uploadpath, $filename);
                     Image::create(
                         array(
                             'minifig_id' => $id,
@@ -63,12 +62,8 @@ class MinifigController extends Controller
         return redirect()->action('MinifigController@index');
     }
 
-    public function update($id, Request $request)
+    public function update($id, MinifigRequest $request)
     {
-        $this->validate($request, [
-               'name'        => 'required|max:255',
-               'set_id'    => 'required'
-        ]);
         $minifig = Minifig::find($id);
         $minifig->name = $request->name;
         $minifig->set_id = $request->set_id;
@@ -83,11 +78,10 @@ class MinifigController extends Controller
 
         $files = $request->file('files');
         if (count($files) > 0) {
-            $uploaddir = 'uploads';
             foreach ($files as $file) {
                 if ($file) {
                     $filename = sha1(rand(1, 100000).time()) . '.' . $file->guessExtension();
-                    $file->move($uploaddir, $filename);
+                    $file->move($this->uploadpath, $filename);
                     Image::create(
                         array(
                             'minifig_id' => $id,

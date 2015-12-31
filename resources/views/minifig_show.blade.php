@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Minifigs')
 
-@section('content')	
+@section('content')
 	<h3>Name: {{ $minifig->name }}</h3>
 	<h3>Set: <a href="{{ URL::to('sets/' . $minifig->set->id) }}">{{ $set->name }}</a></h3>
 	<div class="row">
@@ -12,4 +12,5 @@
 		</div>
 	</div>
 	<a href="{{ URL::to('minifigs/' . $minifig->id . '/edit') }}" class="btn btn-default">Edit</a>
-@endsection
+ @stop
+

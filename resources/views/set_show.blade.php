@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Sets')
 
-@section('content')	
+@section('content')
 	<h3>Name: {{ $set->name }}</h3>
 	<h3>Number: {{ $set->number }}</h3>
 	{!! HTML::image('uploads/' . $set->filename, '', array('class' => 'img img-thumbnail', 'width' => '300px')) !!}
@@ -14,4 +14,5 @@
 		</div>
 	</div>
 	<a href="{{ URL::to('sets/' . $set->id . '/edit') }}" class="btn btn-default">Edit</a>
-@endsection
+ @stop
+
