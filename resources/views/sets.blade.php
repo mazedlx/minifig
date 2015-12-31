@@ -5,7 +5,6 @@
 <table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>ID</th>
 				<th>Name</th>
 				<th>Number</th>
 				<th>Image</th>
@@ -15,7 +14,6 @@
 		<tbody>
 		@foreach($sets as $key => $set)
 			<tr>
-				<td>{{ $set->id }}</td>
 				<td>{{ $set->name }}</td>
 				<td>{{ $set->number }}</td>
 				@if($set->filename)

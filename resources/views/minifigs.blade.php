@@ -5,7 +5,6 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>ID</th>
 				<th>Name</th>
 				<th>Set</th>
 				<th>Image</th>
@@ -15,7 +14,6 @@
 		<tbody>
 		@foreach($minifigs as $key => $minifig)
 			<tr>
-				<td>{{ $minifig->id }}</td>
 				<td>{{ $minifig->name }}</td>
 				<td>{{ $minifig->set->name }} ({{ $minifig->set->number }})</td>
 				@if($minifig->images->first())
