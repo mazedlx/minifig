@@ -5,7 +5,7 @@
 <div class="row">
 {!! Form::model($set, ['route' => ['sets.update', $set->id], 'method' => 'PATCH', 'class' => 'form form-horizontal', 'files' => true]) !!}
 	@include('errors.form')
-	@include('set', ['labelSubmitButton' => 'Edit'])
+	@include('_set', ['labelSubmitButton' => 'Edit'])
 {!!Form::close()!!}
 </div>
 <div class="row">

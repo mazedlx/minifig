@@ -5,7 +5,7 @@
 <div class="row">
 {!!Form::open(['route' => 'sets.store', 'class' => 'form form-horizontal', 'method' => 'POST', 'files' => true]) !!}
 	@include('errors.form')
-	@include('set', ['labelSubmitButton' => 'Create'])
+	@include('_set', ['labelSubmitButton' => 'Create'])
 {!!Form::close()!!}
 </div>
  @stop
