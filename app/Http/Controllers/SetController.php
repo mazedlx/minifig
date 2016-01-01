@@ -22,6 +22,11 @@ class SetController extends Controller
         return view('sets')->with('sets', $sets);
     }
 
+    public function create()
+    {
+        return view('set_create');
+    }
+
     public function store(SetRequest $request)
     {
         if ($request->hasFile('file')) {
@@ -43,11 +48,6 @@ class SetController extends Controller
 
         $request->session()->flash('msg', 'Set created');
         return redirect()->action('SetController@index');
-    }
-
-    public function create()
-    {
-        return view('set_create');
     }
 
     public function update($id, SetRequest $request)
