@@ -9,13 +9,13 @@ class SetTest extends TestCase
 	use DatabaseTransactions;
     public function testSetIndex()
     {
-		$this->visit('sets')
+		$this->visit('/sets')
 			->see('Death Star');
     }
 
-    public function testSetShow() 
+    public function testSetShow()
     {
-        $this->visit('sets/2')
+        $this->visit('/sets/2')
             ->see('Death Star');
     }
 
@@ -23,7 +23,7 @@ class SetTest extends TestCase
     {
     	$user = factory(App\User::class)->create();
     	$this->actingAs($user)
-    		->visit('sets/create')
+    		->visit('/sets/create')
     		->type('TestSet', 'name')
     		->type('12345', 'number')
             ->attach('10188.png', 'file')
@@ -35,10 +35,10 @@ class SetTest extends TestCase
     {
         $user = factory(App\User::class)->create();
         $this->actingAs($user)
-            ->visit('sets/9999/edit')
+            ->visit('/sets/10/edit')
             ->type('TestSetEdit', 'name')
             ->type('12345 Edit', 'number')
-            ->press('Save')
+            ->press('Edit')
             ->see('Set saved');
     }
 
@@ -46,14 +46,14 @@ class SetTest extends TestCase
     {
         $user = factory(App\User::class)->create();
         $this->actingAs($user)
-            ->visit('sets/9999/edit')
+            ->visit('/sets/10/edit')
             ->press('Delete')
             ->see('Set deleted');
     }
 
     public function testSetEditAsGuest()
     {
-        $this->visit('sets/9999/edit')
+        $this->visit('/sets/10/edit')
             ->see('login');
     }
 }
