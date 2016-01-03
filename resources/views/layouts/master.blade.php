@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<base href="{{ URL::secure('/') }}">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>@yield('title')</title>
-		{!! HTML::style('css/bootstrap.css') !!}
-		{!! HTML::script('js/jquery-2.1.4.js') !!}
-		{!! HTML::script('js/bootstrap.js') !!}
+		{!! HTML::style('css/bootstrap.css', [], true) !!}
+		{!! HTML::script('js/jquery-2.1.4.js', [], true) !!}
+		{!! HTML::script('js/bootstrap.js', [], true) !!}
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
