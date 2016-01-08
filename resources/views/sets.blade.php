@@ -17,7 +17,7 @@
 				<td>{{ $set->name }}</td>
 				<td>{{ $set->number }}</td>
 				@if($set->filename)
-					<td><a href="{{ URL::to('sets/' . $set->id) }}">{!! HTML::image('uploads/' . $set->filename, '', array('class' => 'img img-thumbnail', 'width' => '150px')) !!}</a></td>
+					<td><a href="{{ URL::to('sets/' . $set->id) }}">{!! HTML::image('uploads/' . $set->filename, '', array('class' => 'img img-thumbnail', 'width' => '150px'), true) !!}</a></td>
 				@else
 					<td>No Set Picture</td>
 				@endif

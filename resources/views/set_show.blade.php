@@ -9,7 +9,7 @@
 		<div class="col-md-6">
 	@foreach($minifigs as $minifig)
 		<h3><a href="{{ URL::to('minifigs/' . $minifig->id) }}">{{ $minifig->name }}</a></h3>
-		<a href="{{ URL::to('minifigs/' . $minifig->id) }}">{!! HTML::image('uploads/' . $minifig->images->first()->filename, '', array('class' => 'img img-thumbnail', 'width' => '300px')) !!}</a>
+		<a href="{{ URL::to('minifigs/' . $minifig->id) }}">{!! HTML::image('uploads/' . $minifig->images->first()->filename, '', array('class' => 'img img-thumbnail', 'width' => '300px'), true) !!}</a>
 	@endforeach
 		</div>
 	</div>

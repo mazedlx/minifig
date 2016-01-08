@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-md-3">
 	@foreach($images as $image)
-		{!! HTML::image('uploads/' . $image->filename, '', array('class' => 'img img-thumbnail', 'width' => '300px')) !!}
+		{!! HTML::image('uploads/' . $image->filename, '', array('class' => 'img img-thumbnail', 'width' => '300px'), true) !!}
 	@endforeach
 		</div>
 	</div>
