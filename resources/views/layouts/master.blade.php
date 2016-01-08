@@ -7,8 +7,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 		<title>@yield('title')</title>
 		{!! HTML::style('css/bootstrap.css', [], true) !!}
-		{!! HTML::script('js/jquery-2.1.4.js', [], true) !!}
-		{!! HTML::script('js/bootstrap.js', [], true) !!}
+		{!! HTML::script('js/all.js', [], true) !!}
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
