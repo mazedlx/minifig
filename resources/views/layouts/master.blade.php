@@ -6,8 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
 		<title>@yield('title')</title>
-		{!! HTML::style('css/bootstrap.css', []) !!}
-		{!! HTML::script('js/all.js', []) !!}
+		<link rel="stylesheet" href="{{ url()->to('css/bootstrap.css') }}">
+		<script src="{{ url()->to('js/all.js') }}"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
