@@ -18,5 +18,5 @@ elixir(function(mix) {
 
     ], 'public/js/all.js');
 
-    //mix.phpUnit();
+    mix.phpUnit();
 });

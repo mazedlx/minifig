@@ -17,15 +17,19 @@
 				<td>{{ $set->name }}</td>
 				<td>{{ $set->number }}</td>
 				@if($set->filename)
-					<td><a href="{{ URL::to('sets/' . $set->id) }}">{!! HTML::image('uploads/' . $set->filename, '', array('class' => 'img img-thumbnail', 'width' => '150px'), true) !!}</a></td>
+					<td>
+						<a href="{{ url()->to('sets/' . $set->id) }}">
+							<img src="{{ url()->to('uploads/' . $set->filename) }}" class="img img-thumbnail" width="150px">
+						</a>
+					</td>
 				@else
 					<td>No Set Picture</td>
 				@endif
-				<td><a href="{{ URL::to('sets/' . $set->id . '/edit') }}"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="left" title="edit"></span></td>
+				<td><a href="{{ url()->to('sets/' . $set->id . '/edit') }}"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="left" title="edit"></span></td>
 			</tr>
 		@endforeach
 		</tbody>
 	</table>
-	<a href="{{ URL::to('sets/create') }}" class="btn btn-default">Create</a>
+	<a href="{{ url()->to('sets/create') }}" class="btn btn-default">Create</a>
  @stop
 

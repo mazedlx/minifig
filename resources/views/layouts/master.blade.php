@@ -6,14 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
 		<title>@yield('title')</title>
-		{!! HTML::style('css/bootstrap.css', [], true) !!}
-		{!! HTML::script('js/all.js', [], true) !!}
+		{!! HTML::style('css/bootstrap.css', []) !!}
+		{!! HTML::script('js/all.js', []) !!}
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
   				<a class="navbar-brand" href="#">
-  					{!! HTML::image('images/lego.png', '', array('alt' => 'Lego'), true) !!}
+  					{!! HTML::image('images/lego.png', '', array('alt' => 'Lego')) !!}
   				</a>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 					<span class="sr-only">Toggle navigation</span>
@@ -24,10 +24,10 @@
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      		<ul class="nav navbar-nav">
-					<li class="{{ set_active('/') }}"><a href="{{ URL::to('/') }}">Home</a></li>
-					<li class="{{ set_active('minifigs') }}"><a href="{{ URL::to('minifigs') }}">Minifigs</a></li>
-					<li class="{{ set_active('sets') }}"><a href="{{ URL::to('sets') }}">Sets</a></li>
-					<li class=""><a href="{{ URL::to('auth/logout') }}">Logout</a></li>
+					<li class="{{ set_active('/') }}"><a href="{{ url()->to('/') }}">Home</a></li>
+					<li class="{{ set_active('minifigs') }}"><a href="{{ url()->to('minifigs') }}">Minifigs</a></li>
+					<li class="{{ set_active('sets') }}"><a href="{{ url()->to('sets') }}">Sets</a></li>
+					<li class=""><a href="{{ url()->to('auth/logout') }}">Logout</a></li>
 				</ul>
 			</div>
 		</nav>

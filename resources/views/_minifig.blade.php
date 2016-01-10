@@ -22,7 +22,7 @@
             <div class="col-md-6 col-md-offset-2">
                 <div class="has-error">
                     <div class="checkbox">
-                        {!! HTML::image('uploads/' . $image->filename, '', ['class' => 'img img-thumbnail', 'width' => '150px'], true) !!}
+                        <img src="{{ url()->to('uploads/' . $image->filename) }}" class="img img-thumbnail" width="150px">
                         <label>
                             {!! Form::checkbox('images_to_delete[]', $image->id) !!} &times;
                         </label>

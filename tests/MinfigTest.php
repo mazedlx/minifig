@@ -7,10 +7,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class MinfigTest extends TestCase
 {
 	use DatabaseTransactions;
+
     public function testMinifigIndex()
     {
         $this->visit('/minifigs')
-			->see('Boba');
+			->seePageIs('minifigs');
     }
 
     public function testMinifigCreate()
@@ -21,7 +22,7 @@ class MinfigTest extends TestCase
     		->visit('/minifigs/create')
     		->type('TestMinifig', 'name')
     		->select('10', 'set_id')
-            #->attach('10188.png', 'files[]')
+            ->attach('10188.png', 'files[]')
     		->press('Create')
     		->see('Minifig created');
     }
