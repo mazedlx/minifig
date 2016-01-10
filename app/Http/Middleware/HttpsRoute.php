@@ -7,7 +7,8 @@ use Closure;
 class HttpsRoute
 {
     /**
-     * Handle an incoming request.
+     * Check if environment is not local and if route was called via http.
+     * If so, then return a redirect to the secure route
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -15,7 +16,7 @@ class HttpsRoute
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->secure() && app()->environment() !== 'local') {
+        if (!$request->secure() && app()->environment() !== 'local') {
             return redirect()->secure($request->getRequestUri());
         }
         return $next($request);

@@ -13,9 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (app()->environment() !== 'local') {
-            url()->forceSchema('https');
-}    }
+        //
+    }
 
     /**
      * Register any application services.
