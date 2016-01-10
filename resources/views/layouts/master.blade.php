@@ -13,7 +13,7 @@
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
   				<a class="navbar-brand" href="#">
-  					{!! HTML::image('images/lego.png', '', array('alt' => 'Lego')) !!}
+  					<img src="{{ url()->to('images/lego.png') }}" alt="Lego">
   				</a>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 					<span class="sr-only">Toggle navigation</span>
