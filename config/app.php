@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     'env' => env('APP_ENV', 'production'),
 
     /*
@@ -206,7 +206,7 @@ return [
         /*
          * User
          */
-        'Form'=> 'Illuminate\Html\FormFacade', 
+        'Form'=> 'Illuminate\Html\FormFacade',
         'HTML'=> 'Illuminate\Html\HtmlFacade'
 
 
