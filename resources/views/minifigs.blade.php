@@ -2,6 +2,7 @@
 @section('title', 'Minifigs')
 
 @section('content')
+	<a href="{{ url()->to('minifigs/create') }}" class="btn btn-default">Create</a>
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
@@ -31,5 +32,8 @@
 		</tbody>
 	</table>
 	<a href="{{ url()->to('minifigs/create') }}" class="btn btn-default">Create</a>
+	<nav>
+	{!! $minifigs->links() !!}
+	</nav>
  @stop
 

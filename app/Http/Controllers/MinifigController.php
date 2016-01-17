@@ -34,7 +34,7 @@ class MinifigController extends Controller
      */
     public function index()
     {
-        $minifigs = Minifig::orderBy('name', 'asc')->get();
+        $minifigs = Minifig::orderBy('name', 'asc')->simplePaginate(10);
 
         return view('minifigs')
             ->with('minifigs', $minifigs);

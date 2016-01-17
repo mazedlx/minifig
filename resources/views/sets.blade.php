@@ -2,7 +2,8 @@
 @section('title', 'Sets')
 
 @section('content')
-<table class="table table-striped table-hover">
+	<a href="{{ url()->to('sets/create') }}" class="btn btn-default">Create</a>
+	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -30,6 +31,7 @@
 		@endforeach
 		</tbody>
 	</table>
+	{{ $sets->links() }}
 	<a href="{{ url()->to('sets/create') }}" class="btn btn-default">Create</a>
  @stop
 
