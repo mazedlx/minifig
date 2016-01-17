@@ -33,7 +33,7 @@
 	</table>
 	<a href="{{ url()->to('minifigs/create') }}" class="btn btn-default">Create</a>
 	<nav>
-	{!! $minifigs->links() !!}
+	{!! $minifigs->render() !!}
 	</nav>
  @stop
 

@@ -31,7 +31,7 @@
 		@endforeach
 		</tbody>
 	</table>
-	{!! $sets->links() !!}
+	{!! $sets->render() !!}
 	<a href="{{ url()->to('sets/create') }}" class="btn btn-default">Create</a>
  @stop
 
