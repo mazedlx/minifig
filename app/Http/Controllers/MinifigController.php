@@ -12,13 +12,26 @@ use App\Image;
 
 class MinifigController extends Controller
 {
+    /**
+     * The directory where uploaded files should be stored (under public)
+     * @var string
+     */
     protected $uploadpath = 'uploads';
 
+    /**
+     * Class constructor. Load the auth middleware for given routes
+     * @access public
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update']]);
     }
 
+    /**
+     * Return the index view
+     * @access public
+     */
     public function index()
     {
         $minifigs = Minifig::orderBy('name', 'asc')->get();
@@ -27,19 +40,28 @@ class MinifigController extends Controller
             ->with('minifigs', $minifigs);
     }
 
+    /**
+     * Show the form for creating a new minifig
+     * @access public
+     */
     public function create()
     {
         return view('minifig_create')
             ->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'));
     }
 
+    /**
+     * Store a new minifig
+     * @access public
+     * @param  MinifigRequest $request
+     */
     public function store(MinifigRequest $request)
     {
         $minifig = Minifig::create(
-            array(
+            [
                 'name' => $request->name,
                 'set_id' => $request->set_id
-            )
+            ]
         );
         $id = $minifig->id;
 
@@ -49,10 +71,10 @@ class MinifigController extends Controller
                     $filename = sha1(rand(1, 100000).time()) . '.' . $file->guessExtension();
                     $file->move($this->uploadpath, $filename);
                     Image::create(
-                        array(
+                        [
                             'minifig_id' => $id,
                             'filename' => $filename
-                        )
+                        ]
                     );
                 }
             }
@@ -62,6 +84,12 @@ class MinifigController extends Controller
         return redirect()->action('MinifigController@index');
     }
 
+    /**
+     * Update a minifig
+     * @access public
+     * @param  int $id
+     * @param  MinifigRequest $request
+     */
     public function update($id, MinifigRequest $request)
     {
         $minifig = Minifig::find($id);
@@ -83,10 +111,10 @@ class MinifigController extends Controller
                     $filename = sha1(rand(1, 100000).time()) . '.' . $file->guessExtension();
                     $file->move($this->uploadpath, $filename);
                     Image::create(
-                        array(
+                        [
                             'minifig_id' => $id,
                             'filename' => $filename
-                        )
+                        ]
                     );
                 }
             }
@@ -96,6 +124,12 @@ class MinifigController extends Controller
         return redirect()->action('MinifigController@index');
     }
 
+    /**
+     * Delete a minifig
+     * @access public
+     * @param  int $id
+     * @param  Request $request
+     */
     public function destroy($id, Request $request)
     {
         $minifig = Minifig::find($id);
@@ -105,6 +139,11 @@ class MinifigController extends Controller
         return redirect()->action('MinifigController@index');
     }
 
+    /**
+     * Show a minifig with given $id
+     * @access public
+     * @param  int $id
+     */
     public function show($id)
     {
         $minifig = Minifig::findOrFail($id);
@@ -117,6 +156,11 @@ class MinifigController extends Controller
             ->with('images', $images);
     }
 
+    /**
+     * Show the form for editing a minifig
+     * @access public
+     * @param  int $id
+     */
     public function edit($id)
     {
         $minifig = Minifig::findOrFail($id);

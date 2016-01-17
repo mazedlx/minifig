@@ -20,7 +20,6 @@ class ImageController extends Controller
     {
         $image = Image::find($id);
         $minifig = $image->minifig;
-        dd($minifig);
         $image->delete();
 
         Session::flash('msg', 'Successfully deleted');

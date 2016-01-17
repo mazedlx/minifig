@@ -39,11 +39,11 @@ class SetController extends Controller
         }
 
         $set = Set::create(
-            array(
+            [
                 'name' => $request->name,
                 'number' => $request->number,
                 'filename' => $filename
-            )
+            ]
         );
 
         $request->session()->flash('msg', 'Set created');

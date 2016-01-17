@@ -26,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        $gate->define('logout', function ($user) {
+            return $user->id !== false;
+        });
     }
 }

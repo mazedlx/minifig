@@ -27,7 +27,9 @@
 					<li class="{{ set_active('/') }}"><a href="{{ url()->to('/') }}">Home</a></li>
 					<li class="{{ set_active('minifigs') }}"><a href="{{ url()->to('minifigs') }}">Minifigs</a></li>
 					<li class="{{ set_active('sets') }}"><a href="{{ url()->to('sets') }}">Sets</a></li>
+					@can('logout')
 					<li class=""><a href="{{ url()->to('auth/logout') }}">Logout</a></li>
+					@endcan
 				</ul>
 			</div>
 		</nav>
