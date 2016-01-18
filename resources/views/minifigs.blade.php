@@ -2,7 +2,7 @@
 @section('title', 'Minifigs')
 
 @section('content')
-	<a href="{{ url()->to('minifigs/create') }}" class="btn btn-default">Create</a>
+	<a href="{{ url()->to('minifigs/create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create a new minifig</a>
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
@@ -31,9 +31,10 @@
 		@endforeach
 		</tbody>
 	</table>
-	<a href="{{ url()->to('minifigs/create') }}" class="btn btn-default">Create</a>
-	<nav>
-	{!! $minifigs->render() !!}
-	</nav>
- @stop
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			{!! $minifigs->render() !!}
+		</div>
+	</div>
+@stop
 

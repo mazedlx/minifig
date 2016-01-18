@@ -2,7 +2,7 @@
 @section('title', 'Sets')
 
 @section('content')
-	<a href="{{ url()->to('sets/create') }}" class="btn btn-default">Create</a>
+	<a href="{{ url()->to('sets/create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create a new set</a>
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
@@ -31,7 +31,10 @@
 		@endforeach
 		</tbody>
 	</table>
-	{!! $sets->render() !!}
-	<a href="{{ url()->to('sets/create') }}" class="btn btn-default">Create</a>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			{!! $sets->render() !!}
+		</div>
+	</div>
  @stop
 

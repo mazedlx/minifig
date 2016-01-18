@@ -27,9 +27,12 @@
 					<li class="{{ set_active('/') }}"><a href="{{ url()->to('/') }}">Home</a></li>
 					<li class="{{ set_active('minifigs') }}"><a href="{{ url()->to('minifigs') }}">Minifigs</a></li>
 					<li class="{{ set_active('sets') }}"><a href="{{ url()->to('sets') }}">Sets</a></li>
-					@can('logout')
+					@can('loggedin')
 					<li class=""><a href="{{ url()->to('auth/logout') }}">Logout</a></li>
+					@else
+					<li class=""><a href="{{ url()->to('auth/login') }}">Login</a></li>
 					@endcan
+
 				</ul>
 			</div>
 		</nav>
