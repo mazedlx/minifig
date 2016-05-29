@@ -3,7 +3,6 @@ language: php
 php:
   - 5.6
   - 7.0
-  - hhvm
 
 env:
   global:
@@ -20,13 +19,6 @@ env:
     - DB_DATABASE=lego
 
 sudo: false
-
-matrix:
-  include:
-    - php: 5.6
-      env: setup=lowest
-    - php: 5.6
-      env: setup=stable
 
 services:
   - redis-server
