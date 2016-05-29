@@ -15,10 +15,9 @@ env:
     - CACHE_DRIVER=file
     - SESSION_DRIVER=file
     - QUEUE_DRIVER=sync
-    - DB_HOST=localhost
-    - DB_DATABASE=forge
-    - DB_USERNAME=forge
-    - DB_PASSWORD=forge
+    - DB_HOST=127.0.0.1
+    - DB_USERNAME=travis
+    - DB_PASSWORD=
 
 sudo: false
 
