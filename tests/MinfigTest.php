@@ -6,25 +6,25 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class MinfigTest extends TestCase
 {
-	use DatabaseTransactions;
+    use DatabaseTransactions;
 
     public function testMinifigIndex()
     {
         $this->visit('/minifigs')
-			->seePageIs('minifigs');
+            ->seePageIs('minifigs');
     }
 
     public function testMinifigCreate()
     {
-    	$user = factory(App\User::class)->create();
+        $user = factory(App\User::class)->create();
         $minfig = factory(App\Minifig::class)->create();
-    	$this->actingAs($user)
-    		->visit('/minifigs/create')
-    		->type('TestMinifig', 'name')
-    		->select('10', 'set_id')
-            ->attach('10188.png', 'files[]')
-    		->press('Create')
-    		->see('Minifig created');
+        $this->actingAs($user)
+            ->visit('/minifigs/create')
+            ->type('TestMinifig', 'name')
+            ->select('10', 'set_id')
+            ->attach(['10188.png, 10200.png'], 'files[]')
+            ->press('Create')
+            ->see('Minifig created');
     }
 
     public function testMinifigEdit()
@@ -33,7 +33,7 @@ class MinfigTest extends TestCase
         $this->actingAs($user)
             ->visit('/minifigs/20/edit')
             ->type('TestMinifig Edit', 'name')
-            #->attach(['10188.png', '10189.png'], 'files[]')
+            ->attach(['10188.png', '10189.png'], 'files[]')
             ->select('10', 'set_id')
             ->press('Edit')
             ->see('Minifig saved');
