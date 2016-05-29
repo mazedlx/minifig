@@ -20,9 +20,11 @@ sudo: false
 
 services:
   - redis-server
+  - mysql
 
 before_install:
   - travis_retry composer self-update
+  - php artisan migrate:refresh --seed
 
 install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
