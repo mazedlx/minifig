@@ -10,7 +10,7 @@ env:
     - setup=basic
     - APP_ENV=staging
     - APP_DEBUG=true
-    - APP_KEY=xxxx
+    - APP_KEY=ftDMx8ISZHiwGr2bUpYWsu2T4pR1NL5B
     - DB_CONNECTION=mysql
     - CACHE_DRIVER=file
     - SESSION_DRIVER=file
@@ -42,4 +42,6 @@ install:
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
 
 script:
+  - php artisan key:generate
+  - php artisan migrate:refresh --seed
   - vendor/bin/phpunit
