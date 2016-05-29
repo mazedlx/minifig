@@ -35,6 +35,7 @@ services:
 before_install:
   - travis_retry composer self-update
   - mysql -e "create database IF NOT EXISTS lego;" -uroot
+  - php artisan migrate:refresh --seed
 
 install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
@@ -42,5 +43,4 @@ install:
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
 
 script:
-  - php artisan migrate:refresh --seed
   - vendor/bin/phpunit
