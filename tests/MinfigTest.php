@@ -22,7 +22,7 @@ class MinfigTest extends TestCase
             ->visit('/minifigs/create')
             ->type('TestMinifig', 'name')
             ->select('10', 'set_id')
-            ->attach(['10188.png, 10200.png'], 'files[]')
+            //->attach(['10188.png, 10200.png'], 'files[]')
             ->press('Create')
             ->see('Minifig created');
     }
@@ -33,7 +33,7 @@ class MinfigTest extends TestCase
         $this->actingAs($user)
             ->visit('/minifigs/20/edit')
             ->type('TestMinifig Edit', 'name')
-            ->attach(['10188.png', '10189.png'], 'files[]')
+            //->attach(['10188.png', '10189.png'], 'files[]')
             ->select('10', 'set_id')
             ->press('Edit')
             ->see('Minifig saved');
