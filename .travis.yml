@@ -17,7 +17,7 @@ env:
     - QUEUE_DRIVER=sync
     - DB_HOST=127.0.0.1
     - DB_USERNAME=travis
-    - DB_PASSWORD=
+    - DB_DATABASE=lego
 
 sudo: false
 
@@ -34,10 +34,12 @@ services:
 
 before_install:
   - travis_retry composer self-update
+  - mysql -e "create database IF NOT EXISTS lego;" -uroot
 
 install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable; fi
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
 
-script: vendor/bin/phpunit
+script:
+  - vendor/bin/phpunit
