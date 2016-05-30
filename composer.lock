@@ -1122,7 +1122,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.1.0-RC1",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -3013,7 +3013,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.1.0-RC1",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -3066,7 +3066,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.1.0-RC1",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
@@ -3122,16 +3122,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.0-RC1",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "4c2e68f685c2d5ce4f051c0bb6ea4ef37fc0143c"
+                "reference": "eca51b7b65eb9be6af88ad7cc91685f1556f5c9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/4c2e68f685c2d5ce4f051c0bb6ea4ef37fc0143c",
-                "reference": "4c2e68f685c2d5ce4f051c0bb6ea4ef37fc0143c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/eca51b7b65eb9be6af88ad7cc91685f1556f5c9a",
+                "reference": "eca51b7b65eb9be6af88ad7cc91685f1556f5c9a",
                 "shasum": ""
             },
             "require": {
@@ -3167,7 +3167,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-05-24 10:06:56"
+            "time": "2016-05-26 21:46:24"
         }
     ],
     "aliases": [],
