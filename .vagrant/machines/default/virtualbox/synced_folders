@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/lego":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/lego","hostpath":"/Users/maze/Sites/lego","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/maze/Sites/lego","disabled":false}}}
