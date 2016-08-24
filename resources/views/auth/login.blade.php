@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-6">
-    {!! Form::open(array('url' => '/auth/login', 'class' => 'form form-horizontal')) !!}
+    {!! Form::open(array('url' => '/login', 'class' => 'form form-horizontal')) !!}
     <div class="form-group">
         {!! Form::label('email', 'Username', array('class' => 'col-md-2 control-label')) !!}
         <div class="col-md-6">
@@ -22,5 +22,3 @@
     </div>
 </div>
  @stop
-
-

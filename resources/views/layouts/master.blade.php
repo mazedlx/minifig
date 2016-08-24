@@ -27,10 +27,14 @@
 					<li class="{{ set_active('/') }}"><a href="{{ url()->to('/') }}">Home</a></li>
 					<li class="{{ set_active('minifigs') }}"><a href="{{ url()->to('minifigs') }}">Minifigs</a></li>
 					<li class="{{ set_active('sets') }}"><a href="{{ url()->to('sets') }}">Sets</a></li>
-					@can('loggedin')
-					<li class=""><a href="{{ url()->to('auth/logout') }}">Logout</a></li>
-					@else
-					<li class=""><a href="{{ url()->to('auth/login') }}">Login</a></li>
+					@cannot('create', Minfig::class)
+					<li class=""><a href="{{ url('/login') }}">Login</a></li>
+					@endcan
+					@can('create', Minfig::class)
+					<li class="">
+					{!!Form::open(['url' => ['/logout'], 'method' => 'POST']);!!}
+						<button type="submit" class="btn btn-link" style="margin-top: 8px">Logout</button>
+					{!! Form::close() !!}</li>
 					@endcan
 
 				</ul>
