@@ -4,4 +4,4 @@
 
 This is my Laravel playground app. And it is used for organizing my Lego minifigs
 
-(https://lego.mazedlx.net)
+[Demo](https://lego.mazedlx.net)
