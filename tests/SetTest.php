@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class SetTest extends TestCase
 {
 	use DatabaseTransactions;
+    
     public function testSetIndex()
     {
 		$this->visit('/sets')
