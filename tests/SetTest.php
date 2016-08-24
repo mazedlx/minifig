@@ -10,13 +10,13 @@ class SetTest extends TestCase
     public function testSetIndex()
     {
 		$this->visit('/sets')
-			->see('Death Star');
+			->see('Minifig');
     }
 
     public function testSetShow()
     {
         $this->visit('/sets/2')
-            ->see('Death Star');
+            ->see('Minifig');
     }
 
     public function testSetCreate()

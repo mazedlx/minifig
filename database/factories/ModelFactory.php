@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -10,14 +9,23 @@
 | database. Just tell the factory how a default model should look.
 |
 */
-
 $factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'email' => $faker->email,
+        'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
+    ];
+});
+$factory->define(App\Set::class, function (Faker\Generator $faker ) {
+    return [
+        'name' => str_random(10),
+        'number' => str_random(10)
+    ];
+});
+$factory->define(App\Minifig::class, function (Faker\Generator $faker ) {
+    return [
+        'name' => str_random(10),
+        'set_id' => 9999
     ];
 });
