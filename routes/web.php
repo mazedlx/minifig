@@ -13,3 +13,4 @@ Route::get('/', function () {
 Route::resource('minifigs', 'MinifigController');
 Route::resource('sets', 'SetController');
 Route::resource('images', 'ImageController', ['only' => ['destroy']]);
+
