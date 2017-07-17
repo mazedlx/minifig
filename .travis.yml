@@ -8,17 +8,6 @@ php:
 env:
   global:
     - setup=basic
-    - APP_ENV=staging
-    - APP_DEBUG=true
-    - APP_URL=http://localhost/
-    - APP_KEY=ftDMx8ISZHiwGr2bUpYWsu2T4pR1NL5B
-    - DB_CONNECTION=mysql
-    - CACHE_DRIVER=file
-    - SESSION_DRIVER=file
-    - QUEUE_DRIVER=sync
-    - DB_HOST=127.0.0.1
-    - DB_USERNAME=travis
-    - DB_DATABASE=lego_mazedlx_net
 
 sudo: false
 
@@ -28,6 +17,8 @@ services:
 before_install:
   - travis_retry composer self-update
   - mysql -e "create database IF NOT EXISTS lego_mazedlx_net;" -uroot
+  - cp .env.travis .env
+  - php artisan key:generate
 
 before_script:
     - php artisan migrate

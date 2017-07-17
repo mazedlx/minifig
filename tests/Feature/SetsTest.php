@@ -20,7 +20,9 @@ class SetsTest extends TestCase
     function it_shows_a_sets_details()
     {
         $set = factory(Set::class)->create();
-        $this->get('/sets/' . $set->id)->assertStatus(200)->assertSee($set->name);
+        $this->get('/sets/' . $set->id)
+             ->assertStatus(200)
+             ->assertSee($set->name);
     }
 
     /** @test */
@@ -46,7 +48,13 @@ class SetsTest extends TestCase
         $this->actingAs($user);
         $this->patch('/sets/' . $set->id, $setEdit->toArray());
 
-        $this->assertDatabaseHas('sets', ['id' => $set->id, 'name' => $setEdit->name]);
+        $this->assertDatabaseHas(
+            'sets',
+            [
+                'id' => $set->id,
+                'name' => $setEdit->name
+            ]
+        );
     }
 
     /** @test */

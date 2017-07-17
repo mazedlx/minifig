@@ -22,7 +22,9 @@ class MinfigsTest extends TestCase
     function it_shows_a_minifigs_details()
     {
         $minifig = factory(Minifig::class)->create();
-        $this->get('/minifigs/' . $minifig->id)->assertStatus(200)->assertSee($minifig->name);
+        $this->get('/minifigs/' . $minifig->id)
+             ->assertStatus(200)
+             ->assertSee($minifig->name);
     }
 
     /** @test */
@@ -47,7 +49,13 @@ class MinfigsTest extends TestCase
 
         $this->patch('/minifigs/' . $minifig->id, $minifigEdit->toArray());
 
-        $this->assertDatabaseHas('minifigs', ['id' => $minifig->id, 'name' => $minifigEdit->name]);
+        $this->assertDatabaseHas(
+            'minifigs',
+            [
+                'id' => $minifig->id,
+                'name' => $minifigEdit->name
+            ]
+        );
     }
 
     /** @test */
