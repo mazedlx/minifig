@@ -11,13 +11,13 @@
     </div>
 </div>
 <div class="form-group">
-    {!! Form::label('file', 'Files', ['class' => 'col-md-2 control-label']) !!}
+    {!! Form::label('file', 'Image', ['class' => 'col-md-2 control-label']) !!}
     <div class="col-md-6">
         {!! Form::file('file', ['class' => 'form-control', 'multiple' => 'multiple']) !!}
     </div>
 </div>
 <div class="form-group">
     <div class="col-md-10 col-md-offset-2">
-        {!! Form::submit($labelSubmitButton, ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
     </div>
 </div>

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app')
 @section('title', 'Minifigs')
 
 @section('content')
@@ -6,7 +6,7 @@
 {!! Form::model($minifig, ['route' => ['minifigs.update', $minifig->id], 'method' => 'PATCH', 'class' => 'form form-horizontal', 'files' => true]) !!}
     @include('errors.form')
 
-	@include('minifigs._form',['labelSubmitButton' => 'Edit'])
+	@include('minifigs._form')
 {!!Form::close()!!}
 </div>
 <div class="row">

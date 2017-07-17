@@ -55,7 +55,8 @@ class MinifigsController extends Controller
     public function create()
     {
         return view('minifigs.create')
-            ->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'));
+            ->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'))
+            ->with('minifig', Minifig::make());
     }
 
     /**
@@ -94,7 +95,6 @@ class MinifigsController extends Controller
     {
         return view('minifigs.edit')
             ->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'))
-            ->with('images', $minifig->images)
             ->with('minifig', $minifig);
     }
 
