@@ -29,7 +29,7 @@ before_install:
   - mysql -e "create database IF NOT EXISTS lego_mazedlx_net;" -uroot
 
 before_script:
-    - php artisan migrate:refresh
+    - php artisan migrate
 
 install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
