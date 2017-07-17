@@ -11,13 +11,13 @@ env:
     - APP_ENV=staging
     - APP_DEBUG=true
     - APP_KEY=ftDMx8ISZHiwGr2bUpYWsu2T4pR1NL5B
-    - DB_CONNECTION=mysql
+    - DB_CONNECTION=sqlite
     - CACHE_DRIVER=file
     - SESSION_DRIVER=file
     - QUEUE_DRIVER=sync
     - DB_HOST=127.0.0.1
     - DB_USERNAME=travis
-    - DB_DATABASE=lego
+    - DB_DATABASE=:memory:
 
 sudo: false
 
