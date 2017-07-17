@@ -10,6 +10,7 @@ env:
     - setup=basic
     - APP_ENV=staging
     - APP_DEBUG=true
+    - APP_URL=http://localhost/
     - APP_KEY=ftDMx8ISZHiwGr2bUpYWsu2T4pR1NL5B
     - DB_CONNECTION=mysql
     - CACHE_DRIVER=file
