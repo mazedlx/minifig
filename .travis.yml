@@ -37,4 +37,4 @@ install:
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi
 
 script:
-  - vendor/bin/phpunit --filter=SetsTest
+  - vendor/bin/phpunit --filter=MinifigsTest
