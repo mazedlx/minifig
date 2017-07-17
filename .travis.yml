@@ -18,7 +18,6 @@ before_install:
   - travis_retry composer self-update
   - mysql -e "create database IF NOT EXISTS lego_mazedlx_net;" -uroot
   - cp .env.travis .env
-  - php artisan key:generate
 
 before_script:
     - php artisan migrate
