@@ -20,7 +20,7 @@
 				@if($set->filename)
 					<td>
 						<a href="{{ url()->to('sets/' . $set->id) }}">
-							<img src="{{ url()->to('uploads/' . $set->filename) }}" class="img img-thumbnail" width="150px">
+							<img src="{{ url()->to('/storage/' . $set->filename) }}" class="img img-thumbnail" width="150px">
 						</a>
 					</td>
 				@else

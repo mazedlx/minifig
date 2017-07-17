@@ -16,7 +16,7 @@ class CreateSetsTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('number');
-            $table->string('filename');
+            $table->string('filename')->nullable();
             $table->timestamps();
         });
     }

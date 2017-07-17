@@ -7,13 +7,14 @@
     "minimum-stability": "beta",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.3.*",
-        "laravelcollective/html": "5.3.*-dev"
+        "laravel/framework": "5.4.*",
+        "laravelcollective/html": "5.4.*",
+        "laravel/tinker": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~5.7",
         "phpspec/phpspec": "~2.1",
 	"symfony/dom-crawler": "~3.0",
 	"symfony/css-selector": "~3.0",
@@ -31,9 +32,9 @@
         ]
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
-        ]
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "post-install-cmd": [

@@ -17,15 +17,28 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
 $factory->define(App\Set::class, function (Faker\Generator $faker ) {
     return [
-        'name' => str_random(10),
-        'number' => str_random(10)
+        'name' => $faker->word,
+        'number' => $faker->randomNumber(5),
     ];
 });
+
 $factory->define(App\Minifig::class, function (Faker\Generator $faker ) {
     return [
-        'name' => str_random(10),
-        'set_id' => 9999
+        'name' => $faker->word,
+        'set_id' => function () {
+            return factory('App\Set')->create()->id;
+        },
+    ];
+});
+
+$factory->define(App\Image::class, function (Faker\Generator $faker ) {
+    return [
+        'minifig_id' => function () {
+            return factory('App\Minifig')->create()->id;
+        },
+        'filename' => $faker->word,
     ];
 });

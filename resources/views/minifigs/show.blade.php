@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-md-3">
 	@foreach($images as $image)
-		<img src="{{ url()->to('uploads/' . $image->filename) }}" class="img img-thumbnail" width="300px">
+		<img src="{{ url()->to('/storage/' . $image->filename) }}" class="img img-thumbnail" width="300px">
 	@endforeach
 		</div>
 	</div>

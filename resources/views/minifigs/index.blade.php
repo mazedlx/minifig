@@ -20,7 +20,7 @@
 				@if($minifig->images->first())
 					<td>
 						<a href="{{ url()->to('minifigs/' . $minifig->id) }}">
-							<img src="{{ url()->to('uploads/' . $minifig->images->first()->filename) }}" class="img img-thumbnail" width="150px">
+							<img src="{{ url()->to('/storage/' . $minifig->images->first()->filename) }}" class="img img-thumbnail" width="150px">
 						</a>
 					</td>
 				@else

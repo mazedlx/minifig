@@ -16,22 +16,21 @@
         {!! Form::file('files[]', array('class' => 'form-control', 'multiple' => 'multiple')); !!}
     </div>
 </div>
-@if($images)
-    @foreach($images as $image)
-        <div class="form-group">
-            <div class="col-md-6 col-md-offset-2">
-                <div class="has-error">
-                    <div class="checkbox">
-                        <img src="{{ url()->to('uploads/' . $image->filename) }}" class="img img-thumbnail" width="150px">
-                        <label>
-                            {!! Form::checkbox('images_to_delete[]', $image->id) !!} &times;
-                        </label>
-                    </div>
+@forelse($images as $image)
+    <div class="form-group">
+        <div class="col-md-6 col-md-offset-2">
+            <div class="has-error">
+                <div class="checkbox">
+                <img src="{{ url()->to('storage/' . $image->filename) }}" class="img img-thumbnail" width="150px">
+                    <label>
+                        {!! Form::checkbox('images_to_delete[]', $image->id) !!} &times;
+                    </label>
                 </div>
             </div>
         </div>
-    @endforeach
-@endif
+    </div>
+@empty
+@endforelse
 <div class="form-group">
     <div class="col-md-6 col-md-offset-2">
         {!! Form::submit($labelSubmitButton, ['class'=>'btn btn-primary']) !!}

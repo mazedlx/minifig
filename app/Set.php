@@ -12,9 +12,4 @@ class Set extends Model
     {
         return $this->hasMany('App\Minifig')->orderBy('name', 'asc');
     }
-
-    public function scopeLatest($query)
-    {
-        return $query->orderBy('created_at', 'DESC')->first();
-    }
 }

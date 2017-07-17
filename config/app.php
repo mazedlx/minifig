@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => 'Lego Minifigs Database',
 
     /*
     |--------------------------------------------------------------------------
@@ -174,10 +174,10 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class
 
     ],
 

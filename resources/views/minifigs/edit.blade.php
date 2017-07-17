@@ -6,7 +6,7 @@
 {!! Form::model($minifig, ['route' => ['minifigs.update', $minifig->id], 'method' => 'PATCH', 'class' => 'form form-horizontal', 'files' => true]) !!}
     @include('errors.form')
 
-	@include('_minifig',['labelSubmitButton' => 'Edit'])
+	@include('minifigs._form',['labelSubmitButton' => 'Edit'])
 {!!Form::close()!!}
 </div>
 <div class="row">

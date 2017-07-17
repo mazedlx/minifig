@@ -17,9 +17,4 @@ class Minifig extends Model
     {
         return $this->hasMany('App\Image');
     }
-
-    public function scopeLatest($query)
-    {
-        return $query->orderBy('created_at', 'desc')->first();
-    }
 }
