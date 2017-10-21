@@ -8,8 +8,10 @@ class Set extends Model
 {
     protected $fillable = ['name', 'number', 'filename'];
 
+    protected $with = ['minifigs'];
+
     public function minifigs()
     {
-        return $this->hasMany('App\Minifig')->orderBy('name', 'asc');
+        return $this->hasMany(Minifig::class)->orderBy('name', 'asc');
     }
 }

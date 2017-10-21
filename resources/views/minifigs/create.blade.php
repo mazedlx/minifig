@@ -1,10 +1,19 @@
 @extends('layouts.app')
-@section('title', 'Minifigs')
+
 @section('content')
 <div class="row">
-{!!Form::open(['route' => ['minifigs.store'], 'class' => 'form form-horizontal', 'method' => 'POST', 'files' => true]);!!}
-    @include('errors.form')
-	@include('minifigs._form')
-{!!Form::close()!!}
+    <form method="POST" action="/minifigs" enctype="multipart/form-data" class="ml-auto mr-auto">
+        {{ csrf_field() }}
+
+        @include('errors.form')
+
+        @include('minifigs._form')
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <button class="btn btn-primary btn-block" type="submit">Create</button>
+            </div>
+        </div>
+    </form>
 </div>
  @stop

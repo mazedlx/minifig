@@ -1,2 +1,6 @@
 window.$ = window.jQuery = require('jquery');
-require('bootstrap-sass');
+
+import Popper from 'popper.js/dist/umd/popper.js';
+window.Popper = Popper;
+
+require('bootstrap');

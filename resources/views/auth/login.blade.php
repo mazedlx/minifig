@@ -1,24 +1,33 @@
 @extends('layouts.app')
-@section('title', 'Login')
+
 @section('content')
-<div class="row">
-    <div class="col-md-6">
-    {!! Form::open(array('url' => '/login', 'class' => 'form form-horizontal')) !!}
-    <div class="form-group">
-        {!! Form::label('email', 'Username', array('class' => 'col-md-2 control-label')) !!}
-        <div class="col-md-6">
-            {!! Form::text('email', '', array('id' => 'email', 'class' => 'form-control', 'placeholder' => 'Username')) !!}
-        </div>
-    </div>
-    <div class="form-group">
-        {!! Form::label('password', 'Password', array('class' => 'col-md-2 control-label')) !!}
-        <div class="col-md-6">
-            {!! Form::password('password', array('id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password')) !!}
+
+<form method="POST" action="/login" class="ml-auto mr-auto col-md-4">
+    {{ csrf_field() }}
+    <div class="form-group row">
+        <label class="sr-only" for="email">Email</label>
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-fw fa-envelope-o"></i></span>
+                <input type="email" class="form-control" name="email" placeholder="Email" autofocus required>
+            </div>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-default">Login</button>
-    {!! Form::close() !!}
+    <div class="form-group row">
+        <label class="sr-only" for="password">Password</label>
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+        </div>
     </div>
-</div>
- @stop
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </div>
+    </div>
+</form>
+@stop

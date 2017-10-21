@@ -2,54 +2,42 @@
 @section('title', 'Sets')
 
 @section('content')
-	<a href="{{ url()->to('sets/create') }}" class="btn btn-primary">
+	<a href="{{ url("sets/create") }}" class="btn btn-primary">
 		<i class="fa fa-fw fa-plus"></i> Create a new set
 	</a>
 
-	<hr>
-
-	<table class="table table-striped table-hover">
+	<table class="table table-striped table-sm mt-3">
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>Number</th>
 				<th>Image</th>
-				<th colspan="2"></th>
 			</tr>
 		</thead>
 		<tbody>
-		@foreach($sets as $key => $set)
+		@foreach($sets as $set)
 			<tr>
-				<td>{{ $set->name }}</td>
-				<td>{{ $set->number }}</td>
+				<td>
+					<a href="{{ url("/sets/{$set->id}") }}">{{ $set->name }}</a>
+				</td>
+				<td>
+					<a href="{{ url("/sets/{$set->id}") }}">{{ $set->number }}</a>
+				</td>
 				@if($set->filename)
 					<td>
-						<a href="{{ url()->to('sets/' . $set->id) }}">
-							<img src="{{ url()->to('/storage/' . $set->filename) }}" class="img img-thumbnail" width="150px">
+						<a href="{{ url("sets/{$set->id}") }}">
+							<img src="{{ url("/storage/{$set->filename}") }}" class="rounded" width="200px">
 						</a>
 					</td>
 				@else
-					<td>No Set Picture</td>
+					<td>No picture</td>
 				@endif
-				<td>
-					<a
-						href="{{ url()->to('sets/' . $set->id . '/edit') }}"
-						class="btn btn-default"
-						data-toggle="tooltip"
-						data-placement="left"
-						title="edit"
-					>
-						<i class="fa fa-fw fa-pencil"></i>
-					</a>
-				</td>
 			</tr>
 		@endforeach
 		</tbody>
 	</table>
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3 text-center">
-			{!! $sets->render() !!}
-		</div>
+	<div class="d-flex justify-content-center">
+		{!! $sets->render() !!}
 	</div>
  @stop
 

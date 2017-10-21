@@ -1,38 +1,44 @@
-<div class="form-group">
-    {!! Form::label('name', 'Name', array('class' => 'col-md-2 control-label')) !!}
-    <div class="col-md-6">
-        {!! Form::text('name', null, array('id' => 'name', 'class' => 'form-control', 'placeholder' => 'Name')) !!}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="name">Name</label>
+    <div class="col-md-10">
+        <input type="text" name="name" class="form-control" autofocus required value="{{ optional($minifig)->name }}">
     </div>
 </div>
-<div class="form-group">
-    {!! Form::label('set_id', 'Set', array('class' => 'col-md-2 control-label')); !!}
-    <div class="col-md-6">
-        {!! Form::select('set_id', $sets_id, null, array('class' => 'form-control')); !!}
+
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="set_id">Set</label>
+    <div class="col-md-10">
+        <select name="set_id" class="form-control" required>
+            @foreach($sets as $set)
+            <option value="{{ $set->id }}" {{ optional($minifig)->set_id == $set->id ? 'selected' : '' }}>{{ $set->name }}</option>
+            @endforeach
+        </select>
     </div>
 </div>
-<div class="form-group">
-    {!! Form::label('files', 'Image(s)', array('class' => 'col-md-2 control-label')); !!}
-    <div class="col-md-6">
-        {!! Form::file('files[]', array('class' => 'form-control', 'multiple' => 'multiple')); !!}
-    </div>
-</div>
-@forelse($minifig->images as $image)
-    <div class="form-group">
-        <div class="col-md-6 col-md-offset-2">
-            <div class="has-error">
-                <div class="checkbox">
-                <img src="{{ url()->to('storage/' . $image->filename) }}" class="img img-thumbnail" width="150px">
-                    <label>
-                        {!! Form::checkbox('images_to_delete[]', $image->id) !!} &times;
-                    </label>
-                </div>
-            </div>
+
+@if($minifig)
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="files">Current Image(s)</label>
+    <div class="col-md-10">
+    @forelse($minifig->images as $image)
+        <div class="input-group">
+            <img src="{{ url("/storage/{$image->filename}") }}" class="rounded" height="100px">
+            <span class="input-group-addon">
+                <input type="checkbox" name="images_to_delete[]" value="{{ $image->id }}"> <i class="fa fa-fw fa-trash"></i>
+            </span>
         </div>
+    @empty
+        <div class="input-group">
+            <input type="text" readonly class="form-control-plaintext" value="No images.">
+        </div>
+    @endforelse
     </div>
-@empty
-@endforelse
-<div class="form-group">
-    <div class="col-md-6 col-md-offset-2">
-        {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
+</div>
+@endif
+
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="files">Image(s)</label>
+    <div class="col-md-10">
+        <input type="file" name="files[]" multiple="multiple" class="form-control">
     </div>
 </div>

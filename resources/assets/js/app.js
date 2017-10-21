@@ -1,10 +1,16 @@
 require('./bootstrap');
-window.$ = require('jquery');
 
-let Turbolinks = require('turbolinks');
-Turbolinks.start();
+window.Vue = require('vue');
+window.axios = require('axios');
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest'
+};
+
+const app = new Vue({
+    el: '#app',
+});
 
 $('body').tooltip({
     selector: '[data-toggle="tooltip"]',
-    container: 'body'
+    container: 'body',
 });

@@ -8,13 +8,15 @@ class Minifig extends Model
 {
     protected $fillable = ['name', 'set_id'];
 
+    protected $with = ['images'];
+
     public function set()
     {
-        return $this->belongsTo('App\Set');
+        return $this->belongsTo(Set::class);
     }
 
     public function images()
     {
-        return $this->hasMany('App\Image');
+        return $this->hasMany(Image::class);
     }
 }

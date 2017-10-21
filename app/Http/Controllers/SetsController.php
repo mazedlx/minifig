@@ -1,23 +1,16 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\SetRequest;
-use Illuminate\Http\UploadedFile;
+use App\NullFile;
 use App\Set;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class SetsController extends Controller
 {
-    /**
-     * Class constructor. Load the auth middleware except for the given routes
-     */
-    public function __construct()
-    {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
-    }
-
     /**
      * Show all sets
      *
@@ -49,33 +42,31 @@ class SetsController extends Controller
      */
     public function create()
     {
-        return view('sets.create');
+        return view('sets.create')
+            ->with('set', null);
     }
 
     /**
      * Save a new set to the database
      *
-     * @param  SetRequest $request
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SetRequest $request)
+    public function store(Request $request)
     {
-        $set = Set::create([
-            'name' => $request->name,
-            'number' => $request->number,
+        request()->validate([
+            'name' => 'required',
+            'number' => 'required|numeric',
+            'file' => 'sometimes|image',
         ]);
 
-        if($request->file('file') && $request->file('file')->isValid()) {
-            $request->file('file')
-                    ->storeAs('public', 'set_' . $set->id . '.' . $request->file('file')->extension());
+        $set = Set::create([
+            'name' => request('name'),
+            'number' => request('number'),
+            'filename' => request('file', new NullFile)->store('images', 'public'),
+        ]);
 
-            $set->update([
-                'filename' => 'set_' . $set->id . '.' . $request->file('file')->extension(),
-            ]);
-        }
-
-        $request->session()->flash('msg', 'Set created');
-        return redirect()->action('SetsController@index');
+        return redirect()->action('SetsController@index')->with('msg', 'Set created');
     }
 
     /**
@@ -94,15 +85,17 @@ class SetsController extends Controller
      * Update the set in the database
      *
      * @param  Set        $set
-     * @param  SetRequest $request
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Set $set, SetRequest $request)
+    public function update(Set $set, Request $request)
     {
-        $set->update([
-            'name' => $request->name,
-            'number' => $request->number,
+        $data = request()->validate([
+            'name' => 'required',
+            'number' => 'required',
         ]);
+
+        $set->update($data);
 
         if($request->file('file') && $request->file('file')->isValid()) {
             $request->file('file')
@@ -113,8 +106,7 @@ class SetsController extends Controller
             ]);
         }
 
-        $request->session()->flash('msg', 'Set saved');
-        return redirect()->action('SetsController@index');
+        return redirect()->action('SetsController@index')->with('msg', 'Set saved');
     }
 
     /**
@@ -126,9 +118,16 @@ class SetsController extends Controller
      */
     public function destroy(Set $set, Request $request)
     {
+        $set->minifigs->each(function ($minifig) {
+            $minifig->images->each(function ($image) {
+                Storage::disk('public')->delete($image->filename);
+                $image->delete();
+            });
+            $minifig->delete();
+        });
+        Storage::disk('public')->delete($set->filename);
         $set->delete();
 
-        $request->session()->flash('msg', 'Set deleted');
-        return redirect()->action('SetsController@index');
+        return redirect()->action('SetsController@index')->with('msg', 'Set deleted');
     }
 }

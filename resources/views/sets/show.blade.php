@@ -1,26 +1,41 @@
 @extends('layouts.app')
-@section('title', 'Sets')
 
 @section('content')
-	<h3>Name: {{ $set->name }}</h3>
-	<h3>Number: {{ $set->number }}</h3>
-		<img src="{{ url()->to('/storage/' . $set->filename) }}" class="img img-thumbnail" width="300px">
-	<div class="row">
-		<div class="col-md-6">
-	@forelse($minifigs as $minifig)
-		<h3><a href="{{ url()->to('/minifigs/' . $minifig->id) }}">{{ $minifig->name }}</a></h3>
-		<a href="{{ url()->to('/minifigs/' . $minifig->id) }}">
-		@if($minifig->images->count() > 0)
-			<img src="{{ url()->to('/storage/' . $minifig->images()->first()->filename) }}" class="img img-thumbnail" width="300px">
-		@else
-			No image
-		@endif
-		</a>
-	@empty
-		<h3>No minifigs in this set</h3>
-	@endforelse
+<div class="col-md-6">
+	<div class="card">
+		<img class="card-img-top" src="{{ url("/storage/{$set->filename}") }}" alt="{{ $set->name }}">
+		<h4 class="card-header">
+			{{ $set->name }} ({{ $set->number }}) <a href="{{ url("/sets/{$set->id}/edit") }}" class="btn btn-default">Edit</a>
+		</h4>
+		<div class="card-body">
+			<p class="card-text">Minifigs belonging to this set:</p>
+			<table class="table table-striped table-sm">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Image</th>
+					</tr>
+				</thead>
+				<tbody>
+				@forelse($minifigs as $minifig)
+					<tr>
+						<td><a href="{{ url("/minifigs/{$minifig->id}") }}">{{ $minifig->name }}</a></td>
+						<td>
+							<a href="{{ url()->to('/minifigs/' . $minifig->id) }}">
+							@if($minifig->images->count() > 0)
+								<img src="{{ url("/storage/{$minifig->images()->first()->filename}") }}" class="rounded" width="150px" alt="{{ $minifig->name }}">
+							@endif
+							</a>
+						</td>
+					</tr>
+				@empty
+					<tr>
+						<td colspan="3">No sets belonging to this set.</td>
+					</tr>
+				@endforelse
+				</tbody>
+			</table>
 		</div>
 	</div>
-	<a href="{{ url()->to('sets/' . $set->id . '/edit') }}" class="btn btn-default">Edit</a>
- @stop
-
+</div>
+	@stop

@@ -1,23 +1,26 @@
-<div class="form-group">
-    {!! Form::label('name', 'Name', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::text('name', null, ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Name']) !!}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="name">Name</label>
+    <div class="col-md-10">
+        <input type="text" name="name" class="form-control" value="{{ optional($set)->name }}" placeholder="Name" autofocus required>
     </div>
 </div>
-<div class="form-group">
-    {!! Form::label('number', 'Number', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::text('number', null, ['id' => 'number', 'class' => 'form-control', 'placeholder' => 'Number']) !!}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="number">Number</label>
+    <div class="col-md-10">
+        <input type="text" name="number" class="form-control" value="{{ optional($set)->number }}" placeholder="Number" required>
     </div>
 </div>
-<div class="form-group">
-    {!! Form::label('file', 'Image', ['class' => 'col-md-2 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::file('file', ['class' => 'form-control', 'multiple' => 'multiple']) !!}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="file">Image</label>
+    <div class="col-md-10">
+        <input type="file" name="file" class="form-control">
     </div>
 </div>
-<div class="form-group">
-    <div class="col-md-10 col-md-offset-2">
-        {!! Form::submit('Save', ['class'=>'btn btn-primary']) !!}
+@if (optional($set)->filename)
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="file">Current Image</label>
+    <div class="col-md-10">
+        <img src="{{ url("/storage/{$set->filename}") }}" class="rounded" width="200px">
     </div>
 </div>
+@endif

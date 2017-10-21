@@ -1,27 +1,17 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\UploadedFile;
-use App\Http\Requests\MinifigRequest;
 use App\Http\Controllers\Controller;
+use App\Image;
 use App\Minifig;
 use App\Set;
-use App\Image;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class MinifigsController extends Controller
 {
-    /**
-     * Class constructor. Load the auth middleware except for the given routes
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
-    }
-
     /**
      * Return the index view
      *
@@ -55,34 +45,36 @@ class MinifigsController extends Controller
     public function create()
     {
         return view('minifigs.create')
-            ->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'))
-            ->with('minifig', Minifig::make());
+            ->with('sets', Set::orderBy('name', 'asc')->get())
+            ->with('minifig', null);
     }
 
     /**
      * Store a new minifig in the database
      *
-     * @param  MinifigRequest $request
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MinifigRequest $request)
+    public function store(Request $request)
     {
-        $minifig = Minifig::create([
-            'name' => $request->name,
-            'set_id' => $request->set_id
+        $data = request()->validate([
+            'name' => 'required',
+            'set_id' => 'required|numeric|exists:sets,id',
         ]);
 
-        if($request->hasFile('files')) {
-            collect($request->file('files'))->each(function ($file) use ($minifig) {
-                $path = $file->store('public');
-                $minifig->images()->create([
-                    'filename' => explode('/', $path)[1]
+        $minifig = Minifig::create($data);
+
+        if(request()->hasFile('files')) {
+            collect(request()->file('files'))->each(function ($file) use ($minifig) {
+                $image = Image::create([
+                    'minifig_id' => $minifig->id,
+                    'filename' => $file->store('images', 'public')
                 ]);
+                $minifig->images()->save($image);
             });
         }
 
-        $request->session()->flash('msg', 'Minifig created');
-        return redirect()->action('MinifigsController@index');
+        return redirect()->action('MinifigsController@index')->with('msg', 'Minifig created');
     }
 
     /**
@@ -94,41 +86,46 @@ class MinifigsController extends Controller
     public function edit(Minifig $minifig)
     {
         return view('minifigs.edit')
-            ->with('sets_id', Set::orderBy('name', 'asc')->pluck('name', 'id'))
-            ->with('minifig', $minifig);
+            ->with('sets', Set::orderBy('name', 'asc')->get())
+            ->with('minifig', $minifig)
+            ->with('images', $minifig->images);
     }
 
     /**
      * Show the form for updating a minifig
      *
      * @param  Minifig        $minifig
-     * @param  MinifigRequest $request
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Minifig $minifig, MinifigRequest $request)
+    public function update(Minifig $minifig, Request $request)
     {
-        $minifig->update([
-            'name' => $request->name,
-            'set_id' => $request->set_id,
+        $data = request()->validate([
+            'name' => 'required',
+            'set_id' => 'required|exists:sets,id',
         ]);
 
-        if ($request->images_to_delete) {
-            collect($request->images_to_delete)->each(function ($id) {
-                Image::find($id)->delete();
+        $minifig->update($data);
+
+        if (request()->images_to_delete) {
+            collect(request()->images_to_delete)->each(function ($id) {
+                $image = Image::find($id);
+                Storage::delete($image->filename);
+                $image->delete();
             });
         }
 
-        if($request->hasFile('files')) {
-            collect($request->file('files'))->each(function ($file) use ($minifig) {
-                $path = $file->store('public');
-                $minifig->images()->create([
-                    'filename' => explode('/', $path)[1]
+        if(request()->hasFile('files')) {
+            collect(request()->file('files'))->each(function ($file) use ($minifig) {
+                $image = Image::create([
+                    'minifig_id' => $minifig->id,
+                    'filename' => $file->store('images', 'public')
                 ]);
+                $minifig->images()->save($image);
             });
         }
 
-        $request->session()->flash('msg', 'Minifig saved');
-        return redirect()->action('MinifigsController@index');
+        return redirect()->action('MinifigsController@index')->with('msg', 'Minifig saved');
     }
 
     /**
@@ -140,9 +137,12 @@ class MinifigsController extends Controller
      */
     public function destroy(Minifig $minifig, Request $request)
     {
+        $minifig->images->each(function ($image) {
+            Storage::disk('public')->delete($image->filename);
+            $image->delete();
+        });
         $minifig->delete();
 
-        $request->session()->flash('msg', 'Minifig deleted');
-        return redirect()->action('MinifigsController@index');
+        return redirect()->action('MinifigsController@index')->with('msg', 'Minifig deleted');
     }
 }

@@ -3,10 +3,19 @@
 
 @section('content')
 <div class="row">
-{!!Form::open(['route' => 'sets.store', 'class' => 'form form-horizontal', 'method' => 'POST', 'files' => true]) !!}
-	@include('errors.form')
-	@include('sets._form')
-{!!Form::close()!!}
+    <form action="/sets" method="POST" enctype="multipart/form-data" class="ml-auto mr-auto">
+        {{ csrf_field() }}
+
+    	@include('errors.form')
+
+        @include('sets._form')
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary btn-block">Create</button>
+            </div>
+        </div>
+    </form>
 </div>
  @stop
 

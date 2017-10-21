@@ -1,21 +1,33 @@
 @extends('layouts.app')
-@section('title', 'Minifigs')
 
 @section('content')
 <div class="row">
-{!! Form::model($minifig, ['route' => ['minifigs.update', $minifig->id], 'method' => 'PATCH', 'class' => 'form form-horizontal', 'files' => true]) !!}
-    @include('errors.form')
+    <form method="POST" action="/minifigs/{{ $minifig->id }}" enctype="multipart/form-data" class="ml-auto mr-auto">
+        {{ csrf_field() }}
+        {{ method_field('PATCH') }}
 
-	@include('minifigs._form')
-{!!Form::close()!!}
+        @include('errors.form')
+
+        @include('minifigs._form')
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <button class="btn btn-primary btn-block" type="submit">Save</button>
+            </div>
+        </div>
+    </form>
 </div>
+
 <div class="row">
-{!! Form::open(['route' => ['minifigs.destroy', $minifig->id], 'method' => 'DELETE', 'class' => 'form form-horizontal']) !!}
-	<div class="form-group">
-		<div class="col-md-6 col-md-offset-2">
-		{!! Form::submit('Delete', ['class'=>'btn btn-danger']) !!}
-		</div>
-	</div>
-{!! Form::close() !!}
+    <form method="POST" action="/minifigs/{{ $minifig->id }}" class="ml-auto mr-auto">
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <button class="btn btn-danger btn-link" type="submit">Delete (including images)</button>
+            </div>
+        </div>
+    </form>
 </div>
  @stop
