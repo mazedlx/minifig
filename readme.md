@@ -1,4 +1,4 @@
-# Minifig - A Laravel App for organizing Lego Minifigs and Sets
+# Minifig - A Laravel web application for organizing Lego Minifigs and Sets
 
 [![Build Status](https://travis-ci.org/mazedlx/minifig.svg)](https://travis-ci.org/mazedlx/minifig)
 
