@@ -15,6 +15,26 @@ class MinifigTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    function a_guest_can_view_all_minifigs()
+    {
+        $minifigs = factory(Minifig::class, 5)->create();
+
+        $response = $this->get('/minifigs');
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    function a_guest_can_view_a_single_minifig()
+    {
+        $minifig = factory(Minifig::class)->create();
+
+        $response = $this->get("/minifigs/{$minifig->id}");
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
     function a_guest_cant_add_a_new_minifig()
     {
         $minifig = factory(Minifig::class)->make([
@@ -27,6 +47,16 @@ class MinifigTest extends TestCase
         $this->assertDatabaseMissing('minifigs', [
             'name' => 'New Set',
         ]);
+    }
+
+    /** @test */
+    function a_guest_cant_view_the_edit_dialog()
+    {
+        $minifig = factory(Minifig::class)->create();
+
+        $response = $this->get("/minifigs/{$minifig->id}/edit");
+
+        $response->assertStatus(302);
     }
 
     /** @test */

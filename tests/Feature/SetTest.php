@@ -14,6 +14,26 @@ class SetTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    function a_guest_can_view_all_sets()
+    {
+        $sets = factory(Set::class, 5)->create();
+
+        $response = $this->get('/sets');
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    function a_guest_can_view_a_single_set()
+    {
+        $set = factory(Set::class)->create();
+
+        $response = $this->get("/sets/{$set->id}");
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
     function a_guest_cant_add_a_new_set()
     {
         $set = factory(Set::class)->make([
@@ -28,6 +48,16 @@ class SetTest extends TestCase
             'name' => 'New Set',
             'number' => '12345'
         ]);
+    }
+
+    /** @test */
+    function a_guest_cant_view_the_edit_dialog()
+    {
+        $set = factory(Set::class)->create();
+
+        $response = $this->get("/sets/{$set->id}/edit");
+
+        $response->assertStatus(302);
     }
 
     /** @test */
