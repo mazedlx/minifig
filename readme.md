@@ -13,7 +13,12 @@ This is my Laravel playground app. And it is used for organizing my Lego Minifig
  $ npm install
  $ npm run dev
  $ cp .env.example .env
- $ php artisan key:generate
-```
+ ```
 
-After that you should edit the `.env` file to your needs, set the database credentials etc.
+After that you should edit the `.env` file to your needs, e.g. set the database credentials.
+
+```bash 
+ $ php artisan key:generate
+ $ mysql -e "create database IF NOT EXISTS minifigs;" -u root
+ $ php artisan migrate:fresh
+```
