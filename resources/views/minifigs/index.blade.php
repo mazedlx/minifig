@@ -16,23 +16,7 @@
 		</thead>
 		<tbody>
 		@foreach($minifigs as $key => $minifig)
-			<tr>
-				<td>
-					<a href="{{ url("/minifigs/{$minifig->id}") }}">{{ $minifig->name }}</a>
-				</td>
-				<td>
-					<a href="{{ url("/minifigs/{$minifig->id}") }}">{{ $minifig->set->name }} ({{ $minifig->set->number }})</a>
-				</td>
-			@if($minifig->images->first())
-				<td>
-					<a href="{{ url("minifigs/{$minifig->id}") }}">
-						<img src="{{ url("/storage/{$minifig->images->first()->filename}") }}" class="rounded" width="200px">
-					</a>
-				</td>
-			@else
-				<td>No picture</td>
-			@endif
-			</tr>
+			<tr is="minifig-table-item" :minifig="{{ $minifig }}"></tr>
 		@endforeach
 		</tbody>
 	</table>

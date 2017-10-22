@@ -1,3 +1,6 @@
+import MinifigTableItem from './components/Minifigs/TableItem.vue';
+import SetTableItem from './components/Sets/TableItem.vue';
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -8,6 +11,10 @@ window.axios.defaults.headers.common = {
 
 const app = new Vue({
     el: '#app',
+    components: {
+        MinifigTableItem,
+        SetTableItem,
+    }
 });
 
 $('body').tooltip({

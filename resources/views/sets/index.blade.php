@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Sets')
+@section('title', 'Minifigs')
 
 @section('content')
 	<a href="{{ url("sets/create") }}" class="btn btn-primary">
@@ -10,34 +10,18 @@
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>Number</th>
+				<th>Set</th>
 				<th>Image</th>
 			</tr>
 		</thead>
 		<tbody>
-		@foreach($sets as $set)
-			<tr>
-				<td>
-					<a href="{{ url("/sets/{$set->id}") }}">{{ $set->name }}</a>
-				</td>
-				<td>
-					<a href="{{ url("/sets/{$set->id}") }}">{{ $set->number }}</a>
-				</td>
-				@if($set->filename)
-					<td>
-						<a href="{{ url("sets/{$set->id}") }}">
-							<img src="{{ url("/storage/{$set->filename}") }}" class="rounded" width="200px">
-						</a>
-					</td>
-				@else
-					<td>No picture</td>
-				@endif
-			</tr>
+		@foreach($sets as $key => $set)
+			<tr is="set-table-item" :set="{{ $set }}"></tr>
 		@endforeach
 		</tbody>
 	</table>
 	<div class="d-flex justify-content-center">
 		{!! $sets->render() !!}
 	</div>
- @stop
+@stop
 
