@@ -6,17 +6,6 @@ php:
 env:
   global:
     - setup=basic
-    - APP_ENV=staging
-    - APP_DEBUG=true
-    - APP_URL=http://localhost
-    - APP_KEY=ftDMx8ISZHiwGr2bUpYWsu2T4pR1NL5B
-    - DB_CONNECTION=mysql
-    - CACHE_DRIVER=file
-    - SESSION_DRIVER=file
-    - QUEUE_DRIVER=sync
-    - DB_HOST=127.0.0.1
-    - DB_USERNAME=travis
-    - DB_DATABASE=mazedlx_net
 
 sudo: false
 
@@ -30,9 +19,9 @@ before_install:
 before_script:
     - mkdir /home/travis/build/mazedlx/minifig/storage/app/public/images
     - chmod 777 /home/travis/build/mazedlx/minifig/storage/app/public/images
-    - cp .env.example .env
+    - cp .env.travis .env
     - php artisan key:generate
-    - php artisan migrate:refresh
+    - php artisan migrate:fresh
 
 install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
