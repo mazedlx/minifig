@@ -11,7 +11,8 @@ This is my Laravel playground app. And it is used for organizing my Lego Minifig
  $ composer install
  $ npm install
  $ gulp
- $ cp .env.travis .env
+ $ cp .env.example .env
+ $ php artisan key:generate
 ```
 
 After that you should edit the `.env` file to your needs, set the database credentials etc.
