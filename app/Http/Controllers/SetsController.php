@@ -55,9 +55,9 @@ class SetsController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'name' => 'required',
-            'number' => 'required|numeric',
-            'file' => 'sometimes|image',
+            'name' => ['required'],
+            'number' => ['required'],
+            'file' => ['sometimes', 'image'],
         ]);
 
         $set = Set::create([
@@ -91,8 +91,9 @@ class SetsController extends Controller
     public function update(Set $set, Request $request)
     {
         $data = request()->validate([
-            'name' => 'required',
-            'number' => 'required',
+            'name' => ['required'],
+            'number' => ['required'],
+            'file' => ['sometimes', 'image'],
         ]);
 
         $set->update($data);

@@ -58,8 +58,8 @@ class MinifigsController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'name' => 'required',
-            'set_id' => 'required|numeric|exists:sets,id',
+            'name' => ['required'],
+            'set_id' => ['required', 'numeric', 'exists:sets,id'],
         ]);
 
         $minifig = Minifig::create($data);
@@ -101,8 +101,8 @@ class MinifigsController extends Controller
     public function update(Minifig $minifig, Request $request)
     {
         $data = request()->validate([
-            'name' => 'required',
-            'set_id' => 'required|exists:sets,id',
+            'name' => ['required'],
+            'set_id' => ['required', 'numeric', 'exists:sets,id'],
         ]);
 
         $minifig->update($data);
