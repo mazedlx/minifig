@@ -8,6 +8,7 @@ env:
     - setup=basic
     - APP_ENV=staging
     - APP_DEBUG=true
+    - APP_URL=http://localhost
     - APP_KEY=ftDMx8ISZHiwGr2bUpYWsu2T4pR1NL5B
     - DB_CONNECTION=mysql
     - CACHE_DRIVER=file
@@ -29,7 +30,7 @@ before_install:
 before_script:
     - mkdir /home/travis/build/mazedlx/minifig/storage/app/public/images
     - chmod 777 /home/travis/build/mazedlx/minifig/storage/app/public/images
-    - php artisan migrate:refresh --seed
+    - php artisan migrate:refresh
 
 install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist; fi
