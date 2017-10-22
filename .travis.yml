@@ -30,6 +30,7 @@ before_install:
 before_script:
     - mkdir /home/travis/build/mazedlx/minifig/storage/app/public/images
     - chmod 777 /home/travis/build/mazedlx/minifig/storage/app/public/images
+    - php artisan key:generate
     - php artisan migrate:refresh
 
 install:
