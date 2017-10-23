@@ -10,7 +10,7 @@ Route::get('/minifigs/latest', function() {
      return App\Minifig::latest()->first();
 });
 
-Route::get('/minifigs/{minfig}', function ($minifig) {
+Route::get('/minifigs/{minifig}', function ($minifig) {
     return App\Minifig::find($minifig);
 });
 

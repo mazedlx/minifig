@@ -5,9 +5,12 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 window.axios = require('axios');
-window.axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest'
-};
+
+window.axios.interceptors.request.use(function (config) {
+    config.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
+    return config;
+});
+
 
 Vue.use(VueRouter);
 
@@ -16,7 +19,7 @@ const router = new VueRouter({
 });
 
 Vue.prototype.$http = axios;
-Vue.prototype.$api = route;
+Vue.prototype.$api = routes;
 
 const app = new Vue({
     router,

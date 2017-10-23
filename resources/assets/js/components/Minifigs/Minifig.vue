@@ -4,7 +4,7 @@
           <img v-if="minifig.images.length" class="card-img-top" :src="minifig.images[0].filename" :alt="minifig.name">
 
           <h4 class="card-header">
-            {{ minifig.name }} <router-link :to="`/minifigs/${minifig.id}`" class="btn btn-default">Edit</router-link>
+            {{ minifig.name }} <router-link :to="`/minifigs/${minifig.id}/edit`" class="btn btn-default">Edit</router-link>
           </h4>
           <div class="card-body">
 

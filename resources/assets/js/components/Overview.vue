@@ -38,16 +38,17 @@ export default {
     },
 
     mounted() {
-        this.$http.all([
-            this.$http.get('/api/minifigs/latest').then(response => {
-                this.latestMinifig = response.data;
-            }),
-            this.$http.get('/api/sets/latest').then(response => {
-                this.latestSet = response.data;
-            })
+        this.$http
+            .all([
+                this.$http.get('/api/minifigs/latest').then(response => {
+                    this.latestMinifig = response.data;
+                }),
+                this.$http.get('/api/sets/latest').then(response => {
+                    this.latestSet = response.data;
+                }),
             ]).then(() => {
                 this.loaded = true;
             });
-        }
-    }
-    </script>
+    },
+};
+</script>

@@ -9,12 +9,11 @@
     <title>minfigs</title>
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
-    @routes
-
     <script>
-        window.Laravel = <?php echo json_encode([
+        window.Laravel = @json([
             'csrfToken' => csrf_token(),
-            ]); ?>
+            'user' => auth()->user(),
+        ]);
         </script>
     </head>
 

@@ -1742,7 +1742,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             name: null,
             set_id: null,
             formData: new FormData(),
-            filenames: [],
             files: [],
             errors: []
         };
@@ -1750,15 +1749,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
-        saveMinifig: function saveMinifig() {
+        storeMinifig: function storeMinifig() {
             var _this = this;
 
             this.formData.append('name', this.name);
             this.formData.append('set_id', this.set_id);
-            this.formData.append('files[]', JSON.stringify(this.filenames));
 
             this.$http.post('/minifigs', this.formData).then(function (response) {
-                console.log(response.data);
                 _this.$router.replace('/minifigs/' + response.data.id);
             }).catch(function (error) {
                 _this.errors = error.response.data.errors;
@@ -1771,15 +1768,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!e.target.files.length) {
                 return;
             }
-            this.filenames = [];
+            this.files = [];
+            this.formData.delete('files[]');
             var files = Array.from(e.target.files);
             files.map(function (file) {
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
-                return reader.onload = function (event) {
+                reader.onload = function (event) {
                     var src = event.target.result;
                     _this2.files.push(src);
-                    _this2.filenames.push(file);
+                    _this2.formData.append('files[]', file);
                 };
             });
         }
@@ -1790,6 +1788,141 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.$http('/api/options/sets').then(function (response) {
             _this3.sets = response.data;
+            _this3.loaded = true;
+        });
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/Minifigs/EditForm.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            loaded: false,
+            minifig: {},
+            name: null,
+            set_id: null,
+            sets: [],
+            formData: new FormData(),
+            files: [],
+            errors: []
+        };
+    },
+
+
+    methods: {
+        updateMinifig: function updateMinifig() {
+            var _this = this;
+
+            this.formData.append('name', this.name);
+            this.formData.append('set_id', this.set_id);
+            this.formData.append('_method', 'PATCH');
+
+            this.$http.post('/minifigs/' + this.minifig.id, this.formData).then(function (response) {
+                _this.$router.replace('/minifigs/' + _this.minifig.id);
+            }).catch(function (error) {
+                _this.errors = error.response.data.errors;
+            });
+        },
+
+        handleFiles: function handleFiles(e) {
+            var _this2 = this;
+
+            if (!e.target.files.length) {
+                return;
+            }
+            this.files = [];
+            this.formData.delete('files[]');
+            var files = Array.from(e.target.files);
+            files.map(function (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function (event) {
+                    var src = event.target.result;
+                    _this2.files.push(src);
+                    _this2.formData.append('files[]', file);
+                };
+            });
+        }
+    },
+
+    mounted: function mounted() {
+        var _this3 = this;
+
+        this.$http.all([this.$http.get('/api/options/sets').then(function (response) {
+            _this3.sets = response.data;
+        }), this.$http.get('/api/minifigs/' + this.$route.params.id).then(function (response) {
+            _this3.minifig = response.data;
+            _this3.name = response.data.name;
+            _this3.set_id = response.data.set_id;
+        })]).then(function () {
             _this3.loaded = true;
         });
     }
@@ -2090,6 +2223,120 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/Sets/EditForm.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            set: {},
+            name: null,
+            number: null,
+            loaded: false,
+            formData: new FormData(),
+            errors: [],
+            file: null
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$http.get('/api/sets/' + this.$route.params.id).then(function (response) {
+            _this.set = response.data;
+            _this.name = response.data.name;
+            _this.number = response.data.number;
+            _this.loaded = true;
+        });
+    },
+
+
+    methods: {
+        saveSet: function saveSet() {
+            var _this2 = this;
+
+            this.formData.append('name', this.name);
+            this.formData.append('number', this.number);
+            this.formData.append('_method', 'PATCH');
+
+            this.$http.post('/sets/' + this.set.id, this.formData).then(function (response) {
+                _this2.$router.replace('/sets/' + _this2.set.id);
+            }).catch(function (error) {
+                _this2.errors = error.response.data.errors;
+            });
+        },
+
+        handleFile: function handleFile(e) {
+            var _this3 = this;
+
+            if (!e.target.files.length) {
+                return;
+            }
+
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (event) {
+                var src = event.target.result;
+                _this3.formData.append('file', file);
+                _this3.file = src;
+            };
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/Sets/Set.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2142,8 +2389,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            loaded: false,
-            set: {}
+            set: {},
+            loaded: false
         };
     },
     mounted: function mounted() {
@@ -19725,7 +19972,7 @@ var render = function() {
                 "router-link",
                 {
                   staticClass: "btn btn-default",
-                  attrs: { to: "/minifigs/" + _vm.minifig.id }
+                  attrs: { to: "/minifigs/" + _vm.minifig.id + "/edit" }
                 },
                 [_vm._v("Edit")]
               )
@@ -19830,52 +20077,67 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.set.minifigs, function(minifig) {
-                  return _vm.set.minifigs.length
-                    ? _c("tr", { key: minifig.id }, [
+                [
+                  _vm._l(_vm.set.minifigs, function(minifig) {
+                    return _c("tr", { key: minifig.id }, [
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: "/minifigs/" + minifig.id } },
+                            [_vm._v(_vm._s(minifig.name))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: "/minifigs/" + minifig.id } },
+                            [
+                              minifig.images.length
+                                ? _c("img", {
+                                    staticClass: "rounded",
+                                    attrs: {
+                                      src:
+                                        "/storage/" +
+                                        minifig.images[0].filename,
+                                      width: "150px",
+                                      alt: minifig.name
+                                    }
+                                  })
+                                : _c("p", [_vm._v("No image")])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  }),
+                  _vm._v(" "),
+                  !this.set.minifigs.length
+                    ? _c("tr", [
                         _c(
                           "td",
+                          { attrs: { colspan: "2" } },
                           [
+                            _vm._v("No sets belonging to this set. "),
                             _c(
                               "router-link",
-                              { attrs: { to: "/minifigs/" + minifig.id } },
-                              [_vm._v(_vm._s(minifig.name))]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c(
-                              "router-link",
-                              { attrs: { to: "/minifigs/" + minifig.id } },
-                              [
-                                minifig.images.length
-                                  ? _c("img", {
-                                      staticClass: "rounded",
-                                      attrs: {
-                                        src:
-                                          "/storage/" +
-                                          minifig.images[0].filename,
-                                        width: "150px",
-                                        alt: minifig.name
-                                      }
-                                    })
-                                  : _c("p", [_vm._v("No image")])
-                              ]
+                              { attrs: { to: "/minifigs/create" } },
+                              [_vm._v("Add one.")]
                             )
                           ],
                           1
                         )
                       ])
-                    : _c("tr", [
-                        _c("td", { attrs: { colspan: "2" } }, [
-                          _vm._v("No sets belonging to this set.")
-                        ])
-                      ])
-                })
+                    : _vm._e()
+                ],
+                2
               )
             ])
           ])
@@ -19968,6 +20230,222 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-70cb0612\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/Minifigs/EditForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.loaded
+    ? _c("div", { staticClass: "row" }, [
+        _c(
+          "form",
+          { staticClass: "ml-auto mr-auto" },
+          [
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "name" }
+                },
+                [_vm._v("Name")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    autofocus: "",
+                    required: ""
+                  },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "set_id" }
+                },
+                [_vm._v("Set")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.set_id,
+                        expression: "set_id"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "set_id", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.set_id = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.sets, function(set) {
+                    return _c(
+                      "option",
+                      { key: set.id, domProps: { value: set.id } },
+                      [
+                        _vm._v(
+                          _vm._s(set.name) + " (" + _vm._s(set.number) + ")"
+                        )
+                      ]
+                    )
+                  })
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "files" }
+                },
+                [_vm._v("Image(s)")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "file",
+                    name: "files[]",
+                    accept: "image/*",
+                    multiple: "multiple"
+                  },
+                  on: { change: _vm.handleFiles }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label sr-only",
+                  attrs: { for: "" }
+                },
+                [_vm._v("Uploaded Image(s)")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10 ml-auto" }, [
+                _vm.files.length
+                  ? _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.files, function(file) {
+                        return _c("li", [_c("img", { attrs: { src: file } })])
+                      })
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                { staticClass: "col-md-2 col-form-label", attrs: { for: "" } },
+                [_vm._v("Current Image(s)")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _vm.minifig.images.length
+                  ? _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.minifig.images, function(image) {
+                        return _c("li", [
+                          _c("img", { attrs: { src: image.filename } })
+                        ])
+                      })
+                    )
+                  : _c("p", [_vm._v("No images.")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-block",
+                    attrs: { type: "button" },
+                    on: { click: _vm.updateMinifig }
+                  },
+                  [_vm._v("Save it!")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.errors, function(error) {
+              return _c(
+                "div",
+                { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+                [_vm._v("\n            " + _vm._s(error[0]) + "\n        ")]
+              )
+            })
+          ],
+          2
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-70cb0612", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-761ae25a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/Minifigs/Table.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20052,7 +20530,7 @@ var render = function() {
     _c(
       "td",
       [
-        _c("router-link", { attrs: { to: "/set/" + _vm.minifig.set_id } }, [
+        _c("router-link", { attrs: { to: "/sets/" + _vm.minifig.set_id } }, [
           _vm._v(
             _vm._s(this.minifig.setName) +
               " (" +
@@ -20321,9 +20799,9 @@ var render = function() {
                   {
                     staticClass: "btn btn-primary btn-block",
                     attrs: { type: "button" },
-                    on: { click: _vm.saveMinifig }
+                    on: { click: _vm.storeMinifig }
                   },
-                  [_vm._v("Create it!")]
+                  [_vm._v("Save it!")]
                 )
               ])
             ]),
@@ -20348,6 +20826,190 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-ba4b97f8", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d0f24232\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/Sets/EditForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.loaded
+    ? _c("div", { staticClass: "row" }, [
+        _c(
+          "form",
+          { staticClass: "ml-auto mr-auto" },
+          [
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "name" }
+                },
+                [_vm._v("Name")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    placeholder: "Name",
+                    autofocus: "",
+                    required: ""
+                  },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "number" }
+                },
+                [_vm._v("Number")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.number,
+                      expression: "number"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "number",
+                    placeholder: "Number",
+                    required: ""
+                  },
+                  domProps: { value: _vm.number },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.number = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "file" }
+                },
+                [_vm._v("Image")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "file", name: "file" },
+                  on: { change: _vm.handleFile }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label sr-only",
+                  attrs: { for: "" }
+                },
+                [_vm._v("Uploaded Image")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10 ml-auto" }, [
+                _vm.file ? _c("img", { attrs: { src: _vm.file } }) : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label sr-only",
+                  attrs: { for: "" }
+                },
+                [_vm._v("Current Image")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10 ml-auto" }, [
+                _vm.set.filename
+                  ? _c("img", { attrs: { src: _vm.set.filename } })
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-block",
+                    attrs: { type: "button" },
+                    on: { click: _vm.saveSet }
+                  },
+                  [_vm._v("Save it!")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.errors, function(error) {
+              return _c(
+                "div",
+                { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+                [_vm._v("\n            " + _vm._s(error[0]) + "\n        ")]
+              )
+            })
+          ],
+          2
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-d0f24232", module.exports)
   }
 }
 
@@ -33695,9 +34357,11 @@ __webpack_require__("./resources/assets/js/bootstrap.js");
 
 window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 window.axios = __webpack_require__("./node_modules/axios/index.js");
-window.axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest'
-};
+
+window.axios.interceptors.request.use(function (config) {
+    config.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
+    return config;
+});
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
@@ -33706,7 +34370,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 });
 
 Vue.prototype.$http = axios;
-Vue.prototype.$api = route;
+Vue.prototype.$api = __WEBPACK_IMPORTED_MODULE_1__routes__["a" /* default */];
 
 var app = new Vue({
     router: router,
@@ -33717,6 +34381,19 @@ $('body').tooltip({
     selector: '[data-toggle="tooltip"]',
     container: 'body'
 });
+
+/***/ }),
+
+/***/ "./resources/assets/js/auth.js":
+/***/ (function(module, exports) {
+
+var user = window.Laravel.user;
+
+module.exports = {
+    isLoggedIn: function isLoggedIn() {
+        return user.id !== null;
+    }
+};
 
 /***/ }),
 
@@ -33823,6 +34500,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-ba4b97f8", Component.options)
   } else {
     hotAPI.reload("data-v-ba4b97f8", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/Minifigs/EditForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/Minifigs/EditForm.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-70cb0612\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/Minifigs/EditForm.vue")
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Minifigs/EditForm.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-70cb0612", Component.options)
+  } else {
+    hotAPI.reload("data-v-70cb0612", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -34079,6 +34805,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/Sets/EditForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/Sets/EditForm.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d0f24232\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/Sets/EditForm.vue")
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Sets/EditForm.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d0f24232", Component.options)
+  } else {
+    hotAPI.reload("data-v-d0f24232", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/components/Sets/Set.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34238,14 +35013,20 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Minifigs_Table_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Minifigs_Table_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Minifigs_CreateForm_vue__ = __webpack_require__("./resources/assets/js/components/Minifigs/CreateForm.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Minifigs_CreateForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Minifigs_CreateForm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Sets_Table_vue__ = __webpack_require__("./resources/assets/js/components/Sets/Table.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Sets_Table_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Sets_Table_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Minifigs_Minifig_vue__ = __webpack_require__("./resources/assets/js/components/Minifigs/Minifig.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Minifigs_Minifig_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Minifigs_Minifig_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Sets_Set_vue__ = __webpack_require__("./resources/assets/js/components/Sets/Set.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Sets_Set_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Sets_Set_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Sets_CreateForm_vue__ = __webpack_require__("./resources/assets/js/components/Sets/CreateForm.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Sets_CreateForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_Sets_CreateForm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Minifigs_EditForm_vue__ = __webpack_require__("./resources/assets/js/components/Minifigs/EditForm.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Minifigs_EditForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Minifigs_EditForm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Sets_Table_vue__ = __webpack_require__("./resources/assets/js/components/Sets/Table.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Sets_Table_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Sets_Table_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Minifigs_Minifig_vue__ = __webpack_require__("./resources/assets/js/components/Minifigs/Minifig.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Minifigs_Minifig_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Minifigs_Minifig_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Sets_Set_vue__ = __webpack_require__("./resources/assets/js/components/Sets/Set.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Sets_Set_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_Sets_Set_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Sets_CreateForm_vue__ = __webpack_require__("./resources/assets/js/components/Sets/CreateForm.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Sets_CreateForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_Sets_CreateForm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Sets_EditForm_vue__ = __webpack_require__("./resources/assets/js/components/Sets/EditForm.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Sets_EditForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_Sets_EditForm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_js__ = __webpack_require__("./resources/assets/js/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__auth_js__);
 
 
 
@@ -34255,7 +35036,28 @@ module.exports = Component.exports
 
 
 
-var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_0__components_Overview_vue___default.a }, { path: '/login', component: __WEBPACK_IMPORTED_MODULE_1__components_LoginForm_vue___default.a }, { path: '/minifigs', component: __WEBPACK_IMPORTED_MODULE_2__components_Minifigs_Table_vue___default.a }, { path: '/minifigs/create', component: __WEBPACK_IMPORTED_MODULE_3__components_Minifigs_CreateForm_vue___default.a }, { path: '/minifigs/:id', component: __WEBPACK_IMPORTED_MODULE_5__components_Minifigs_Minifig_vue___default.a }, { path: '/sets', component: __WEBPACK_IMPORTED_MODULE_4__components_Sets_Table_vue___default.a }, { path: '/sets/create', component: __WEBPACK_IMPORTED_MODULE_7__components_Sets_CreateForm_vue___default.a }, { path: '/sets/:id', component: __WEBPACK_IMPORTED_MODULE_6__components_Sets_Set_vue___default.a }];
+
+
+
+var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_0__components_Overview_vue___default.a }, {
+    path: '/login',
+    component: __WEBPACK_IMPORTED_MODULE_1__components_LoginForm_vue___default.a,
+    beforeEnter: function beforeEnter(to, from, next) {
+        if (__WEBPACK_IMPORTED_MODULE_10__auth_js___default.a.isLoggedIn()) {
+            next('/');
+        }
+        next('/login');
+    }
+}, { path: '/minifigs', component: __WEBPACK_IMPORTED_MODULE_2__components_Minifigs_Table_vue___default.a }, {
+    path: '/minifigs/create',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_Minifigs_CreateForm_vue___default.a,
+    beforeEnter: function beforeEnter(to, from, next) {
+        if (__WEBPACK_IMPORTED_MODULE_10__auth_js___default.a.isLoggedIn()) {
+            next();
+        }
+        next('/login');
+    }
+}, { path: '/minifigs/:id', component: __WEBPACK_IMPORTED_MODULE_6__components_Minifigs_Minifig_vue___default.a }, { path: '/minifigs/:id/edit', component: __WEBPACK_IMPORTED_MODULE_4__components_Minifigs_EditForm_vue___default.a }, { path: '/sets', component: __WEBPACK_IMPORTED_MODULE_5__components_Sets_Table_vue___default.a }, { path: '/sets/create', component: __WEBPACK_IMPORTED_MODULE_8__components_Sets_CreateForm_vue___default.a }, { path: '/sets/:id', component: __WEBPACK_IMPORTED_MODULE_7__components_Sets_Set_vue___default.a }, { path: '/sets/:id/edit', component: __WEBPACK_IMPORTED_MODULE_9__components_Sets_EditForm_vue___default.a }];
 
 /* harmony default export */ __webpack_exports__["a"] = (routes);
 

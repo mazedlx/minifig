@@ -15,7 +15,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="set.minifigs.length" v-for="minifig in set.minifigs" :key="minifig.id">
+                        <tr v-for="minifig in set.minifigs" :key="minifig.id">
                             <td>
                                 <router-link :to="`/minifigs/${minifig.id}`">{{ minifig.name }}</router-link>
                             </td>
@@ -32,8 +32,8 @@
                                 </router-link>
                             </td>
                         </tr>
-                        <tr v-else>
-                            <td colspan="2">No sets belonging to this set.</td>
+                        <tr v-if="! this.set.minifigs.length">
+                            <td colspan="2">No sets belonging to this set. <router-link to="/minifigs/create">Add one.</router-link></td>
                         </tr>
                     </tbody>
                 </table>
@@ -45,8 +45,8 @@
 export default {
     data() {
         return {
-            loaded: false,
             set: {},
+            loaded: false,
         };
     },
 

@@ -4,7 +4,7 @@
             <router-link :to="`/minifigs/${minifig.id}`">{{ this.minifig.name }}</router-link>
         </td>
         <td>
-            <router-link :to="`/set/${minifig.set_id}`">{{ this.minifig.setName }} ({{ this.minifig.setNumber }})</router-link>
+            <router-link :to="`/sets/${minifig.set_id}`">{{ this.minifig.setName }} ({{ this.minifig.setNumber }})</router-link>
         </td>
         <td>
             <router-link :to="`/minifigs/${minifig.id}`">

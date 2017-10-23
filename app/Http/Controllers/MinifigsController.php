@@ -95,12 +95,16 @@ class MinifigsController extends Controller
      */
     public function update(Minifig $minifig, Request $request)
     {
-        $data = request()->validate([
+        request()->validate([
             'name' => ['required'],
             'set_id' => ['required', 'numeric', 'exists:sets,id'],
+            'files.*' => ['sometimes', 'image'],
         ]);
 
-        $minifig->update($data);
+        $minifig->update([
+            'name' => request('name'),
+            'set_id' => request('set_id'),
+        ]);
 
         if (request()->images_to_delete) {
             collect(request()->images_to_delete)->each(function ($id) {

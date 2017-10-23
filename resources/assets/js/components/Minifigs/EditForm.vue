@@ -36,8 +36,20 @@
             </div>
 
             <div class="form-group row">
+                <label for="" class="col-md-2 col-form-label">Current Image(s)</label>
+                <div class="col-md-10">
+                    <ul v-if="minifig.images.length" class="list-unstyled">
+                        <li v-for="image in minifig.images">
+                            <img :src="image.filename">
+                        </li>
+                    </ul>
+                    <p v-else>No images.</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
                 <div class="col-md-12">
-                    <button @click="storeMinifig" class="btn btn-primary btn-block" type="button">Save it!</button>
+                    <button @click="updateMinifig" class="btn btn-primary btn-block" type="button">Save it!</button>
                 </div>
             </div>
 
@@ -52,9 +64,10 @@ export default {
     data() {
         return {
             loaded: false,
-            sets: [],
+            minifig: {},
             name: null,
             set_id: null,
+            sets: [],
             formData: new FormData(),
             files: [],
             errors: [],
@@ -62,14 +75,15 @@ export default {
     },
 
     methods: {
-        storeMinifig: function () {
+        updateMinifig: function () {
             this.formData.append('name', this.name);
             this.formData.append('set_id', this.set_id);
+            this.formData.append('_method', 'PATCH');
 
             this.$http
-                .post('/minifigs', this.formData)
+                .post(`/minifigs/${this.minifig.id}`, this.formData)
                 .then((response) => {
-                    this.$router.replace(`/minifigs/${response.data.id}`);
+                    this.$router.replace(`/minifigs/${this.minifig.id}`);
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
@@ -96,10 +110,23 @@ export default {
     },
 
     mounted() {
-        this.$http('/api/options/sets').then((response) => {
-            this.sets = response.data;
-            this.loaded = true;
-        });
+        this.$http
+            .all([
+                this.$http
+                    .get('/api/options/sets')
+                    .then((response) => {
+                        this.sets = response.data;
+                    }),
+                this.$http
+                    .get(`/api/minifigs/${this.$route.params.id}`)
+                    .then((response) => {
+                        this.minifig = response.data;
+                        this.name = response.data.name;
+                        this.set_id = response.data.set_id;
+                    }),
+            ]).then(() => {
+                this.loaded = true;
+            });
     },
 };
 </script>
