@@ -51,17 +51,19 @@ class MinifigsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate([
-            'name' => ['required'],
+        request()->validate([
+            'name' => ['required', 'string'],
             'set_id' => ['required', 'numeric', 'exists:sets,id'],
             'files.*' => ['sometimes', 'image'],
         ]);
 
-        $minifig = Minifig::create($data);
+        $minifig = Minifig::create([
+            'name' => request('name'),
+            'set_id' => request('set_id'),
+        ]);
 
         if(request()->hasFile('files')) {
             collect(request()->file('files'))->each(function ($file) use ($minifig) {
-
                 $image = Image::create([
                     'minifig_id' => $minifig->id,
                     'filename' => $file->store('images', 'public')

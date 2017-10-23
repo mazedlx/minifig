@@ -125,25 +125,46 @@ class MinifigTest extends TestCase
     function minifig_image_is_uploaded_if_included()
     {
         Storage::fake('public');
-        $file = File::image('minifig_image.png', 300, 150);
+        $fileA = File::image('minifig_image_a.png', 300, 150);
+        $fileB = File::image('minifig_image_b.png', 300, 150);
+        $fileC = File::image('minifig_image_c.png', 300, 150);
         $user = factory(User::class)->create();
 
         $minifig = factory(Minifig::class)->make([
             'files' => [
-                $file,
+                $fileA,
+                $fileB,
+                $fileC,
             ],
         ]);
 
         $response = $this->actingAs($user)->post('/minifigs', $minifig->toArray());
 
-        tap(Minifig::first(), function ($minifig) use ($file) {
-            $this->assertNotNull($minifig->images()->first()->filename);
-            Storage::disk('public')->assertExists($minifig->images()->first()->filename);
+        tap(Minifig::first(), function ($minifig) use ($fileA, $fileB, $fileC) {
+            $minifig->images->each(function ($image) {
+                $this->assertNotNull($image->filename);
+                Storage::disk('public')->assertExists($image->filename);
+
+            });
+
             $this->assertFileEquals(
-                $file->getPathname(),
-                Storage::disk('public')->path($minifig->images()->first()->filename)
+                $fileA->getPathname(),
+                Storage::disk('public')->path($minifig->images()->take(1)->first()->filename)
             );
+
+            $this->assertFileEquals(
+                $fileB->getPathname(),
+                Storage::disk('public')->path($minifig->images()->skip(1)->take(1)->first()->filename)
+            );
+
+            $this->assertFileEquals(
+                $fileC->getPathname(),
+                Storage::disk('public')->path($minifig->images()->skip(2)->take(1)->first()->filename)
+            );
+
+            $this->assertEquals(3, $minifig->images->count());
         });
+
     }
 
     /** @test */

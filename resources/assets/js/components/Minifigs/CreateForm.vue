@@ -25,9 +25,24 @@
             </div>
 
             <div class="form-group row">
+                <label for="" class="col-md-2 col-form-label sr-only">Uploaded Image(s)</label>
+                <div class="col-md-10 ml-auto">
+                    <ul class="list-unstyled" v-if="files.length">
+                        <li v-for="file in files">
+                            <img :src="file">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group row">
                 <div class="col-md-12">
                     <button @click="saveMinifig" class="btn btn-primary btn-block" type="button">Create it!</button>
                 </div>
+            </div>
+
+            <div v-for="error in errors" class="alert alert-danger" role="alert">
+                {{ error[0] }}
             </div>
         </form>
     </div>
@@ -40,39 +55,46 @@ export default {
             sets: [],
             name: null,
             set_id: null,
+            formData: new FormData(),
+            filenames: [],
             files: [],
+            errors: [],
         };
     },
 
     methods: {
         saveMinifig: function () {
-            const minifig = {
-                name: this.name,
-                set_id: this.set_id,
-                files: this.files,
-            };
+            this.formData.append('name', this.name);
+            this.formData.append('set_id', this.set_id);
+            this.formData.append('files[]', JSON.stringify(this.filenames));
 
             this.$http
-                .post('/minifigs', minifig)
+                .post('/minifigs', this.formData)
                 .then((response) => {
+                    console.log(response.data);
                     this.$router.replace(`/minifigs/${response.data.id}`);
                 })
                 .catch((error) => {
-                    //
+                    this.errors = error.response.data.errors;
                 });
         },
+
         handleFiles: function (e) {
             if (! e.target.files.length) {
                 return;
             }
-
-            for (let file of e.target.files) {
+            this.filenames = [];
+            const files = Array.from(e.target.files);
+            files.map((file) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    this.files.push(event.target.result);
+                return reader.onload = (event) => {
+                    const src = event.target.result;
+                    this.files.push(src);
+                    this.filenames.push(file);
                 };
-            }
+
+            });
         },
     },
 

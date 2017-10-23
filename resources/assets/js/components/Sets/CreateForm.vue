@@ -22,7 +22,7 @@
 
             <div class="form-group row">
                 <label for="" class="col-md-2 col-form-label sr-only">Uploaded Image</label>
-                <div class="col-md-10">
+                <div class="col-md-10 ml-auto">
                     <img v-if="file" :src="file">
                 </div>
             </div>

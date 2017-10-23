@@ -1718,6 +1718,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1726,7 +1741,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             sets: [],
             name: null,
             set_id: null,
-            files: []
+            formData: new FormData(),
+            filenames: [],
+            files: [],
+            errors: []
         };
     },
 
@@ -1735,53 +1753,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveMinifig: function saveMinifig() {
             var _this = this;
 
-            var minifig = {
-                name: this.name,
-                set_id: this.set_id,
-                files: this.files
-            };
+            this.formData.append('name', this.name);
+            this.formData.append('set_id', this.set_id);
+            this.formData.append('files[]', JSON.stringify(this.filenames));
 
-            this.$http.post('/minifigs', minifig).then(function (response) {
+            this.$http.post('/minifigs', this.formData).then(function (response) {
+                console.log(response.data);
                 _this.$router.replace('/minifigs/' + response.data.id);
             }).catch(function (error) {
-                //
+                _this.errors = error.response.data.errors;
             });
         },
+
         handleFiles: function handleFiles(e) {
             var _this2 = this;
 
             if (!e.target.files.length) {
                 return;
             }
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = e.target.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var file = _step.value;
-
-                    var reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = function (event) {
-                        _this2.files.push(event.target.result);
-                    };
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
+            this.filenames = [];
+            var files = Array.from(e.target.files);
+            files.map(function (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                return reader.onload = function (event) {
+                    var src = event.target.result;
+                    _this2.files.push(src);
+                    _this2.filenames.push(file);
+                };
+            });
         }
     },
 
@@ -19508,7 +19508,7 @@ var render = function() {
                 [_vm._v("Uploaded Image")]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-10" }, [
+              _c("div", { staticClass: "col-md-10 ml-auto" }, [
                 _vm.file ? _c("img", { attrs: { src: _vm.file } }) : _vm._e()
               ])
             ]),
@@ -20168,136 +20168,176 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.loaded
     ? _c("div", { staticClass: "row" }, [
-        _c("form", { staticClass: "ml-auto mr-auto" }, [
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-md-2 col-form-label",
-                attrs: { for: "name" }
-              },
-              [_vm._v("Name")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-10" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "name",
-                  autofocus: "",
-                  required: ""
-                },
-                domProps: { value: _vm.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.name = $event.target.value
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-md-2 col-form-label",
-                attrs: { for: "set_id" }
-              },
-              [_vm._v("Set")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-10" }, [
+        _c(
+          "form",
+          { staticClass: "ml-auto mr-auto" },
+          [
+            _c("div", { staticClass: "form-group row" }, [
               _c(
-                "select",
+                "label",
                 {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "name" }
+                },
+                [_vm._v("Name")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.set_id,
-                      expression: "set_id"
+                      value: _vm.name,
+                      expression: "name"
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { name: "set_id", required: "" },
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    autofocus: "",
+                    required: ""
+                  },
+                  domProps: { value: _vm.name },
                   on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.set_id = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
                     }
                   }
-                },
-                _vm._l(_vm.sets, function(set) {
-                  return _c(
-                    "option",
-                    { key: set.id, domProps: { value: set.id } },
-                    [_vm._v(_vm._s(set.name) + " (" + _vm._s(set.number) + ")")]
-                  )
                 })
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-md-2 col-form-label",
-                attrs: { for: "files" }
-              },
-              [_vm._v("Image(s)")]
-            ),
+              ])
+            ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-10" }, [
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "file",
-                  name: "files[]",
-                  accept: "image/*",
-                  multiple: "multiple"
-                },
-                on: { change: _vm.handleFiles }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "form-group row" }, [
               _c(
-                "button",
+                "label",
                 {
-                  staticClass: "btn btn-primary btn-block",
-                  attrs: { type: "button" },
-                  on: { click: _vm.saveMinifig }
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "set_id" }
                 },
-                [_vm._v("Create it!")]
+                [_vm._v("Set")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.set_id,
+                        expression: "set_id"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "set_id", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.set_id = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.sets, function(set) {
+                    return _c(
+                      "option",
+                      { key: set.id, domProps: { value: set.id } },
+                      [
+                        _vm._v(
+                          _vm._s(set.name) + " (" + _vm._s(set.number) + ")"
+                        )
+                      ]
+                    )
+                  })
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label",
+                  attrs: { for: "files" }
+                },
+                [_vm._v("Image(s)")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "file",
+                    name: "files[]",
+                    accept: "image/*",
+                    multiple: "multiple"
+                  },
+                  on: { change: _vm.handleFiles }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-2 col-form-label sr-only",
+                  attrs: { for: "" }
+                },
+                [_vm._v("Uploaded Image(s)")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10 ml-auto" }, [
+                _vm.files.length
+                  ? _c(
+                      "ul",
+                      { staticClass: "list-unstyled" },
+                      _vm._l(_vm.files, function(file) {
+                        return _c("li", [_c("img", { attrs: { src: file } })])
+                      })
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-block",
+                    attrs: { type: "button" },
+                    on: { click: _vm.saveMinifig }
+                  },
+                  [_vm._v("Create it!")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.errors, function(error) {
+              return _c(
+                "div",
+                { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+                [_vm._v("\n            " + _vm._s(error[0]) + "\n        ")]
               )
-            ])
-          ])
-        ])
+            })
+          ],
+          2
+        )
       ])
     : _vm._e()
 }
