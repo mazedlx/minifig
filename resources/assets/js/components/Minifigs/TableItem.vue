@@ -1,16 +1,16 @@
 <template>
     <tr>
         <td>
-            <a :href="this.url">{{ this.minifig.name }}</a>
+            <router-link :to="`/minifigs/${minifig.id}`">{{ this.minifig.name }}</router-link>
         </td>
         <td>
-            <a :href="this.url">{{ this.minifig.setName }} ({{ this.minifig.setNumber }})</a>
+            <router-link :to="`/set/${minifig.set_id}`">{{ this.minifig.setName }} ({{ this.minifig.setNumber }})</router-link>
         </td>
         <td>
-            <a :href="this.url">
-                <img v-if="this.image" :src="this.image" width="200px" class="rounded" :alt="this.minifig.name">
+            <router-link :to="`/minifigs/${minifig.id}`">
+                <img v-if="this.image" :src="`/storage/${this.image}`" width="200px" class="rounded" :alt="this.minifig.name">
                 <p v-else>No image</p>
-            </a>
+            </router-link>
         </td>
     </tr>
 </template>
@@ -24,7 +24,10 @@ export default {
     },
 
     props: {
-        minifig: Object,
+        minifig: {
+            type: Object,
+            required: true,
+        },
     },
 };
 </script>

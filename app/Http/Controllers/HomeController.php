@@ -15,8 +15,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index')
-            ->with('latestMinifig', Minifig::latest()->first())
-            ->with('latestSet', Set::latest()->first());
+        return view('index');
     }
 }

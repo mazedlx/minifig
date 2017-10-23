@@ -18,8 +18,7 @@ class SetsController extends Controller
      */
     public function index()
     {
-        return view('sets.index')
-            ->with('sets', Set::orderBy('name', 'asc')->paginate(10));
+        return view('sets.index');
     }
 
     /**
@@ -30,9 +29,7 @@ class SetsController extends Controller
      */
     public function show(Set $set)
     {
-        return view('sets.show')
-            ->with('set', $set)
-            ->with('minifigs', $set->minifigs);
+        return view('sets.show');
     }
 
     /**
@@ -42,8 +39,7 @@ class SetsController extends Controller
      */
     public function create()
     {
-        return view('sets.create')
-            ->with('set', null);
+        return view('sets.create');
     }
 
     /**
@@ -66,7 +62,7 @@ class SetsController extends Controller
             'filename' => request('file', new NullFile)->store('images', 'public'),
         ]);
 
-        return redirect()->action('SetsController@index')->with('msg', 'Set created');
+        return $set;
     }
 
     /**

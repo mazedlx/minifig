@@ -8,6 +8,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
     <title>minfigs</title>
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+
+    @routes
+
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -22,7 +25,7 @@
             @include('partials.alert')
 
             <div class="container-fluid">
-                @yield('content')
+                <router-view></router-view>
             </div>
 
         </div>

@@ -1,5 +1,5 @@
-import MinifigTableItem from './components/Minifigs/TableItem.vue';
-import SetTableItem from './components/Sets/TableItem.vue';
+import VueRouter from 'vue-router';
+import routes from './routes';
 
 require('./bootstrap');
 
@@ -9,12 +9,18 @@ window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    routes,
+});
+
+Vue.prototype.$http = axios;
+Vue.prototype.$api = route;
+
 const app = new Vue({
+    router,
     el: '#app',
-    components: {
-        MinifigTableItem,
-        SetTableItem,
-    }
 });
 
 $('body').tooltip({

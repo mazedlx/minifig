@@ -19,8 +19,7 @@ class MinifigsController extends Controller
      */
     public function index()
     {
-        return view('minifigs.index')
-            ->with('minifigs', Minifig::orderBy('name', 'asc')->paginate(10));
+        return view('minifigs.index');
     }
 
     /**
@@ -31,10 +30,7 @@ class MinifigsController extends Controller
      */
     public function show(Minifig $minifig)
     {
-        return view('minifigs.show')
-            ->with('minifig', $minifig)
-            ->with('set', $minifig->set)
-            ->with('images', $minifig->images);
+        return view('minifigs.show');
     }
 
     /**
@@ -44,9 +40,7 @@ class MinifigsController extends Controller
      */
     public function create()
     {
-        return view('minifigs.create')
-            ->with('sets', Set::orderBy('name', 'asc')->get())
-            ->with('minifig', null);
+        return view('minifigs.create');
     }
 
     /**
@@ -60,12 +54,14 @@ class MinifigsController extends Controller
         $data = request()->validate([
             'name' => ['required'],
             'set_id' => ['required', 'numeric', 'exists:sets,id'],
+            'files.*' => ['sometimes', 'image'],
         ]);
 
         $minifig = Minifig::create($data);
 
         if(request()->hasFile('files')) {
             collect(request()->file('files'))->each(function ($file) use ($minifig) {
+
                 $image = Image::create([
                     'minifig_id' => $minifig->id,
                     'filename' => $file->store('images', 'public')
@@ -74,7 +70,7 @@ class MinifigsController extends Controller
             });
         }
 
-        return redirect()->action('MinifigsController@index')->with('msg', 'Minifig created');
+        return $minifig;
     }
 
     /**
@@ -85,10 +81,7 @@ class MinifigsController extends Controller
      */
     public function edit(Minifig $minifig)
     {
-        return view('minifigs.edit')
-            ->with('sets', Set::orderBy('name', 'asc')->get())
-            ->with('minifig', $minifig)
-            ->with('images', $minifig->images);
+        return view('minifigs.edit');
     }
 
     /**

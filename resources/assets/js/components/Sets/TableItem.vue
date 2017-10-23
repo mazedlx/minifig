@@ -1,16 +1,16 @@
 <template>
     <tr>
         <td>
-            <a :href="this.url">{{ this.set.name }}</a>
+            <router-link :to="`/sets/${set.id}`">{{ this.set.name }}</router-link>
         </td>
         <td>
-            <a :href="this.url">{{ this.set.number }}</a>
+            <router-link :to="`/sets/${set.id}`">{{ this.set.number }}</router-link>
         </td>
         <td>
-            <a :href="this.url">
-                <img v-if="this.set.filename" :src="this.set.filename" width="200px" class="rounded" :alt="this.set.name">
+            <router-link :to="`/sets/${set.id}`">
+                <img v-if="this.set.filename" :src="`/storage/${this.set.filename}`" width="200px" class="rounded" :alt="this.set.name">
                 <p v-else>No image</p>
-            </a>
+            </router-link>
         </td>
     </tr>
 </template>
@@ -18,12 +18,15 @@
 export default {
     data() {
         return {
-            url: `/sets/${this.set.id}`,
+
         };
     },
 
     props: {
-        set: Object,
+        set: {
+            type: Object,
+            required: true,
+        },
     },
 };
 </script>

@@ -2,8 +2,8 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index');
-Route::get('/minifigs', 'MinifigsController@index');
-Route::get('/sets', 'SetsController@index');
+Route::get('/minifigs', 'MinifigsController@index')->name('minifigs.index');
+Route::get('/sets', 'SetsController@index')->name('sets.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/minifigs/create', 'MinifigsController@create');
@@ -21,5 +21,5 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/images', 'ImagesController@destroy');
 });
 
-Route::get('/minifigs/{minifig}', 'MinifigsController@show');
-Route::get('/sets/{set}', 'SetsController@show');
+Route::get('/minifigs/{minifig}', 'MinifigsController@show')->name('minifigs.show');
+Route::get('/sets/{set}', 'SetsController@show')->name('sets.show');

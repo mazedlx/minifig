@@ -8,13 +8,13 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item {{ set_active('/') }}"><a class="nav-link" href="{{ url()->to('/') }}">Home</a></li>
-            <li class="nav-item {{ set_active('minifigs') }}"><a class="nav-link" href="{{ url()->to('minifigs') }}">Minifigs</a></li>
-            <li class="nav-item {{ set_active('sets') }}"><a class="nav-link" href="{{ url()->to('sets') }}">Sets</a></li>
+            <li class="nav-item"><router-link class="nav-link" to="/">Home</router-link></li>
+            <li class="nav-item"><router-link class="nav-link" to="/minifigs">Minfigs</router-link></li>
+            <li class="nav-item"><router-link class="nav-link" to="/sets">Sets</router-link></li>
         </ul>
         <ul class="navbar-nav ml-auto">
         @cannot('create', Minfig::class)
-            <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Login</a></li>
+            <li class="nav-item"><router-link class="nav-link" to="/login">Login</router-link></li>
         @endcannot
         @can('create', Minfig::class)
             <li class="nav-item">

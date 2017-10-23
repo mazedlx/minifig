@@ -2,18 +2,30 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::get('/minifigs', function () {
+    return App\Minifig::paginate(10);
+});
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+Route::get('/minifigs/latest', function() {
+     return App\Minifig::latest()->first();
+});
 
+Route::get('/minifigs/{minfig}', function ($minifig) {
+    return App\Minifig::find($minifig);
+});
+
+Route::get('/sets', function () {
+    return App\Set::paginate(10);
+});
+
+Route::get('/sets/latest', function() {
+     return App\Set::latest()->first();
+});
+
+Route::get('/sets/{minfig}', function ($set) {
+    return App\Set::find($set);
+});
+
+Route::get('/options/sets', function () {
+    return App\Set::orderBy('name', 'asc')->get();
+});
