@@ -34391,7 +34391,7 @@ var user = window.Laravel.user;
 
 module.exports = {
     isLoggedIn: function isLoggedIn() {
-        return user.id !== null;
+        return user !== null;
     }
 };
 
