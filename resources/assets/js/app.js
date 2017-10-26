@@ -1,29 +1,30 @@
+import Vue from 'vue';
+import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import routes from './routes';
+import NavBar from './components/NavBar.vue';
+import store from './store';
+import router from './router';
 
 require('./bootstrap');
 
-window.Vue = require('vue');
 window.axios = require('axios');
 
-window.axios.interceptors.request.use(function (config) {
+window.axios.interceptors.request.use((config) => {
     config.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
     return config;
 });
 
-
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-    routes,
-});
+window.Event = new Vue();
 
 Vue.prototype.$http = axios;
-Vue.prototype.$api = routes;
 
 const app = new Vue({
     router,
+    store,
     el: '#app',
+    components: {
+        NavBar,
+    },
 });
 
 $('body').tooltip({

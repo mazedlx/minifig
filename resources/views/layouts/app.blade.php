@@ -12,14 +12,13 @@
     <script>
         window.Laravel = @json([
             'csrfToken' => csrf_token(),
-            'user' => auth()->user(),
         ]);
         </script>
     </head>
 
     <body>
         <div id="app">
-            @include('partials.nav')
+            <nav-bar></nav-bar>
 
             @include('partials.alert')
 

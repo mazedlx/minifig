@@ -46,7 +46,15 @@ export default {
             this.$http
                 .post('/login', { email: this.email, password: this.password })
                 .then((response) => {
-                    this.$router.replace('/');
+                    this.$http
+                        .get('/api/user')
+                        .then(() => {
+                            this.$store.commit('logIn');
+                            this.$router.push('/');
+                        })
+                        .catch((e) => {
+                            this.errors = e.r.data.errors;
+                        });
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;

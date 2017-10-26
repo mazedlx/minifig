@@ -1,6 +1,6 @@
     <template>
-    <div v-if="loaded" class="row">
-        <div class="col-md-6">
+    <div v-if="loaded" class="row d-flex justify-content-center">
+        <div class="col-md-4">
             <div class="card">
                 <img v-if="latestMinifig.images.length" class="card-img-top" :src="`/storage/${latestMinifig.images[0].filename}`" :alt="latestMinifig.name">
                 <div class="card-header">
@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card">
                 <img v-if="latestSet.filename" class="card-img-top" :src="`/storage/${latestSet.filename}`" :alt="latestSet.name">
                 <div class="card-header">

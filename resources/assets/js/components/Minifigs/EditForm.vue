@@ -39,8 +39,9 @@
                 <label for="" class="col-md-2 col-form-label">Current Image(s)</label>
                 <div class="col-md-10">
                     <ul v-if="minifig.images.length" class="list-unstyled">
-                        <li v-for="image in minifig.images">
+                        <li v-for="image in minifig.images" :key="image.id">
                             <img :src="image.filename">
+                            <button @click="destroyImage(image.id)" type="button" class="btn btn-light"><i class="fa fa-fw fa-trash"></i></button>
                         </li>
                     </ul>
                     <p v-else>No images.</p>
@@ -106,6 +107,17 @@ export default {
                     this.formData.append('files[]', file);
                 };
             });
+        },
+
+        destroyImage: function (id, filename) {
+            this.$http
+                .delete(`/api/images/${id}`, { _method: 'DELETE' })
+                .then((response) => {
+                    this.minifig.images.splice(this.minifig.images.findIndex(image => image.id === id), 1);
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                });
         },
     },
 
