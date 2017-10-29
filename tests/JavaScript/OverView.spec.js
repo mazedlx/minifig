@@ -73,15 +73,17 @@ describe.only('Overview.vue', () => {
         });
 
         moxios.withMock(() => {
-            let setFetched = sinon.spy();
+            const setFetched = sinon.spy();
             axios.get('/api/sets/latest').then(setFetched);
 
-            // let minifigFetched = sinon.spy();
-            // axios.get('/api/minifigs/latest').then(minifigFetched);
+            const minifigFetched = sinon.spy();
+            axios.get('/api/minifigs/latest').then(minifigFetched);
 
             moxios.wait(() => {
-                let request = moxios.requests.mostRecent()
-                request.respondWith({
+                const setRequest = moxios.requests.get('get', '/api/sets/latest');
+                const minifigRequest = moxios.requests.get('get', '/api/minifigs/latest');
+
+                setRequest.respondWith({
                     status: 200,
                     response: {
                         id: 27,
@@ -90,8 +92,26 @@ describe.only('Overview.vue', () => {
                         filename: 'images/797132e972e08b3ca9c2542c3d30278c.jpg',
                     },
                 }).then(() => {
-                    console.log(`text ${wrapper.text()}`);
-                    done();
+                    minifigRequest.respondWith({
+                        status: 200,
+                        response: {
+                            id: 1,
+                            set_id: 11,
+                            name: 'et',
+                            setName: 'est',
+                            setNumber: 21871,
+                            images: [
+                                {
+                                    id: 1,
+                                    minifig_id: 1,
+                                    filename: 'images/252a35311d48445df9fec9b1f75cc9a9.jpg',
+                                },
+                            ],
+                        },
+                    }).then(() => {
+                        expect(wrapper.html().toContain('Chase McCain'));
+                        done();
+                    });
                 });
             });
         });

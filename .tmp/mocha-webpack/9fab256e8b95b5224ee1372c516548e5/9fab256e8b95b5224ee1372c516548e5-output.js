@@ -35522,12 +35522,14 @@ describe.only('Overview.vue', function () {
             var setFetched = __WEBPACK_IMPORTED_MODULE_5_sinon___default.a.spy();
             __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('/api/sets/latest').then(setFetched);
 
-            // let minifigFetched = sinon.spy();
-            // axios.get('/api/minifigs/latest').then(minifigFetched);
+            var minifigFetched = __WEBPACK_IMPORTED_MODULE_5_sinon___default.a.spy();
+            __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('/api/minifigs/latest').then(minifigFetched);
 
             __WEBPACK_IMPORTED_MODULE_3_moxios___default.a.wait(function () {
-                var request = __WEBPACK_IMPORTED_MODULE_3_moxios___default.a.requests.mostRecent();
-                request.respondWith({
+                var setRequest = __WEBPACK_IMPORTED_MODULE_3_moxios___default.a.requests.get('get', '/api/sets/latest');
+                var minifigRequest = __WEBPACK_IMPORTED_MODULE_3_moxios___default.a.requests.get('get', '/api/minifigs/latest');
+
+                setRequest.respondWith({
                     status: 200,
                     response: {
                         id: 27,
@@ -35536,8 +35538,26 @@ describe.only('Overview.vue', function () {
                         filename: 'images/797132e972e08b3ca9c2542c3d30278c.jpg'
                     }
                 }).then(function () {
-                    console.log('text ' + wrapper.text());
+                    expect(wrapper.html().toContain('Chase McCain'));
                     done();
+                    minifigRequest.respondWith({
+                        status: 200,
+                        response: {
+                            id: 1,
+                            set_id: 11,
+                            name: 'et',
+                            setName: 'est',
+                            setNumber: 21871,
+                            images: [{
+                                id: 1,
+                                minifig_id: 1,
+                                filename: 'images/252a35311d48445df9fec9b1f75cc9a9.jpg'
+                            }]
+                        }
+                    }).then(function () {
+                        expect(wrapper.html().toContain('Chase McCain'));
+                        done();
+                    });
                 });
             });
         });
