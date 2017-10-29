@@ -27,7 +27,7 @@ export default {
     },
 
     mounted() {
-        this.$http.get(`/api/minifigs/${this.$route.params.id}`).then((response) => {
+        axios.get(`/api/minifigs/${this.$route.params.id}`).then((response) => {
             this.minifig = response.data;
             this.loaded = true;
         });

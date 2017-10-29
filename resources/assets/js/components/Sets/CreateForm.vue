@@ -61,7 +61,7 @@ export default {
             this.formData.append('name', this.name);
             this.formData.append('number', this.number);
 
-            this.$http
+            axios
                 .post('/sets', this.formData)
                 .then((response) => {
                     this.$router.replace(`/sets/${response.data.id}`);

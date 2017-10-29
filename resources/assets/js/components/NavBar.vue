@@ -31,7 +31,7 @@ export default {
     methods: {
         logout: function (e) {
             e.preventDefault();
-            this.$http.post('/logout').then(() => {
+            axios.post('/logout').then(() => {
                 this.$store.commit('logOut');
                 this.$router.push('/');
             });

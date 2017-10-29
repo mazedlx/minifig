@@ -66,7 +66,7 @@ export default {
             this.formData.append('name', this.name);
             this.formData.append('set_id', this.set_id);
 
-            this.$http
+            axios
                 .post('/minifigs', this.formData)
                 .then((response) => {
                     this.$router.replace(`/minifigs/${response.data.id}`);
@@ -96,7 +96,7 @@ export default {
     },
 
     mounted() {
-        this.$http('/api/options/sets').then((response) => {
+        axios('/api/options/sets').then((response) => {
             this.sets = response.data;
             this.loaded = true;
         });

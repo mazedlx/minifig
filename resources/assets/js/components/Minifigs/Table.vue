@@ -33,7 +33,7 @@ export default {
     },
 
     mounted() {
-        this.$http.get('/api/minifigs').then((response) => {
+        axios.get('/api/minifigs').then((response) => {
             this.minifigs = response.data.data;
             this.loaded = true;
         });

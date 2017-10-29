@@ -61,7 +61,7 @@ export default {
     },
 
     mounted() {
-        this.$http
+        axios
             .get(`/api/sets/${this.$route.params.id}`)
             .then((response) => {
                 this.set = response.data;
@@ -77,7 +77,7 @@ export default {
             this.formData.append('number', this.number);
             this.formData.append('_method', 'PATCH');
 
-            this.$http
+            axios
                 .post(`/sets/${this.set.id}`, this.formData)
                 .then((response) => {
                     this.$router.replace(`/sets/${this.set.id}`);

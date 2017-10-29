@@ -51,7 +51,7 @@ export default {
     },
 
     mounted() {
-        this.$http.get(`/api/sets/${this.$route.params.id}`).then((response) => {
+        axios.get(`/api/sets/${this.$route.params.id}`).then((response) => {
             this.set = response.data;
             this.loaded = true;
         });

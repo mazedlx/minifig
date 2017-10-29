@@ -81,7 +81,7 @@ export default {
             this.formData.append('set_id', this.set_id);
             this.formData.append('_method', 'PATCH');
 
-            this.$http
+            axios
                 .post(`/minifigs/${this.minifig.id}`, this.formData)
                 .then((response) => {
                     this.$router.replace(`/minifigs/${this.minifig.id}`);
@@ -110,7 +110,7 @@ export default {
         },
 
         destroyImage: function (id, filename) {
-            this.$http
+            axios
                 .delete(`/api/images/${id}`, { _method: 'DELETE' })
                 .then((response) => {
                     this.minifig.images.splice(this.minifig.images.findIndex(image => image.id === id), 1);
@@ -122,14 +122,14 @@ export default {
     },
 
     mounted() {
-        this.$http
+        axios
             .all([
-                this.$http
+                axios
                     .get('/api/options/sets')
                     .then((response) => {
                         this.sets = response.data;
                     }),
-                this.$http
+                axios
                     .get(`/api/minifigs/${this.$route.params.id}`)
                     .then((response) => {
                         this.minifig = response.data;

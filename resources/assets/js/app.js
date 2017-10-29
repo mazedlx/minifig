@@ -16,8 +16,6 @@ window.axios.interceptors.request.use((config) => {
 
 window.Event = new Vue();
 
-Vue.prototype.$http = axios;
-
 const app = new Vue({
     router,
     store,

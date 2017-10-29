@@ -34,21 +34,31 @@ export default {
             latestSet: {},
             latestMinifig: {},
             loaded: false,
+            errors: [],
         };
     },
 
     mounted() {
-        this.$http
-            .all([
-                this.$http.get('/api/minifigs/latest').then(response => {
+        axios.all([
+            axios
+                .get('/api/minifigs/latest')
+                .then((response) => {
                     this.latestMinifig = response.data;
+                })
+                .catch((error) => {
+                    // this.errors = error.response.data.errors;
                 }),
-                this.$http.get('/api/sets/latest').then(response => {
+            axios
+                .get('/api/sets/latest')
+                .then((response) => {
                     this.latestSet = response.data;
+                })
+                .catch((error) => {
+                    // this.errors = error.response.data.errors;
                 }),
-            ]).then(() => {
-                this.loaded = true;
-            });
+        ]).then(() => {
+            this.loaded = true;
+        });
     },
 };
 </script>

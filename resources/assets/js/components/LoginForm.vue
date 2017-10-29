@@ -43,10 +43,10 @@ export default {
 
     methods: {
         login: function () {
-            this.$http
+            axios
                 .post('/login', { email: this.email, password: this.password })
                 .then((response) => {
-                    this.$http
+                    axios
                         .get('/api/user')
                         .then(() => {
                             this.$store.commit('logIn');
