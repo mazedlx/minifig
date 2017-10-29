@@ -42712,6 +42712,44 @@ var render = function() {
     ? _c("div", { staticClass: "row d-flex justify-content-center" }, [
         _c("div", { staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card" }, [
+            _vm.latestMinifig.images.length
+              ? _c("img", {
+                  staticClass: "card-img-top",
+                  attrs: {
+                    src: "/storage/" + _vm.latestMinifig.images[0].filename,
+                    alt: _vm.latestMinifig.name
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("\n                Latest Minifig\n            ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("h4", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(_vm.latestMinifig.name))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { to: "/minifigs/" + _vm.latestMinifig.id }
+                  },
+                  [_vm._v("Show " + _vm._s(_vm.latestMinifig.name))]
+                )
+              ],
+              1
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card" }, [
             _vm.latestSet.filename
               ? _c("img", {
                   staticClass: "card-img-top",
