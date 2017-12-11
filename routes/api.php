@@ -2,10 +2,6 @@
 
 use Illuminate\Http\Request;
 
-Route::get('/user', function () {
-    return auth()->user();
-});
-
 Route::get('/minifigs', function () {
     return App\Minifig::paginate(10);
 });

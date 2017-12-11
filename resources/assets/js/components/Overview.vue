@@ -38,26 +38,38 @@ export default {
         };
     },
 
-    mounted() {
-        axios.all([
-            axios
+    methods: {
+        getLatestMinifig: function () {
+            return axios
                 .get('/api/minifigs/latest')
                 .then((response) => {
                     this.latestMinifig = response.data;
                 })
                 .catch((error) => {
-                    // this.errors = error.response.data.errors;
-                }),
-            axios
+                    this.errors = error.response.data.errors;
+                });
+        },
+
+        getLatestSet: function () {
+            return axios
                 .get('/api/sets/latest')
                 .then((response) => {
                     this.latestSet = response.data;
                 })
                 .catch((error) => {
-                    // this.errors = error.response.data.errors;
-                }),
+                    this.errors = error.response.data.errors;
+                });
+        },
+    },
+
+    mounted() {
+        Promise.all([
+            this.getLatestMinifig(),
+            this.getLatestSet(),
         ]).then(() => {
             this.loaded = true;
+        }).catch((error) => {
+            this.errors = error.response.data.errors;
         });
     },
 };

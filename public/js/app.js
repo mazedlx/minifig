@@ -15962,18 +15962,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             latestSet: {},
             latestMinifig: {},
-            loaded: false
+            loaded: false,
+            errors: []
         };
     },
-    mounted: function mounted() {
-        var _this = this;
 
-        axios.all([axios.get('/api/minifigs/latest').then(function (response) {
-            _this.latestMinifig = response.data;
-        }), axios.get('/api/sets/latest').then(function (response) {
-            _this.latestSet = response.data;
-        })]).then(function () {
-            _this.loaded = true;
+
+    methods: {
+        getLatestMinifig: function getLatestMinifig() {
+            var _this = this;
+
+            return axios.get('/api/minifigs/latest').then(function (response) {
+                _this.latestMinifig = response.data;
+            }).catch(function (error) {
+                _this.errors = error.response.data.errors;
+            });
+        },
+
+        getLatestSet: function getLatestSet() {
+            var _this2 = this;
+
+            return axios.get('/api/sets/latest').then(function (response) {
+                _this2.latestSet = response.data;
+            }).catch(function (error) {
+                _this2.errors = error.response.data.errors;
+            });
+        }
+    },
+
+    mounted: function mounted() {
+        var _this3 = this;
+
+        Promise.all([this.getLatestMinifig(), this.getLatestSet()]).then(function () {
+            _this3.loaded = true;
+        }).catch(function (error) {
+            _this3.errors = error.response.data.errors;
         });
     }
 });
